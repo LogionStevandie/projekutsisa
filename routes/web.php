@@ -20,3 +20,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::resource('pulau', 'App\Http\Controllers\PulauController');
+Route::resource('menu', 'App\Http\Controllers\MenuController');
+Route::resource('barangJenis', 'App\Http\Controllers\BarangJenisController');
+Route::resource('provinsi', 'App\Http\Controllers\BarangJenisController');
