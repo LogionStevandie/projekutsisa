@@ -17,7 +17,7 @@ class PembayaranJenisController extends Controller
     public function index()
     {
         //
-        $data = DB::table('PembayaranJenis')->get();
+        $data = DB::table('PembayaranJenis')->where('hapus',0)->get();
         
 
         return view('pembayaranJenis.index',[
@@ -52,10 +52,6 @@ class PembayaranJenisController extends Controller
             ->insert(array(
                 'nama' => $data['nama'],
                 'keterangan' => $data['keterangan'],
-                'CreatedBy'=> $user->id,
-                'CreatedOn'=> date("Y-m-d h:i:sa"),
-                'UpdatedBy'=> $user->id,
-                'UpdatedOn'=> date("Y-m-d h:i:sa"),
             )
         );
         return redirect()->route('pembayaranJenis.index')->with('status','Success!!');
@@ -107,8 +103,6 @@ class PembayaranJenisController extends Controller
             ->update(array(
                 'nama' => $data['nama'],
                 'keterangan' => $data['keterangan'],
-                'UpdatedBy'=> $user->id,
-                'UpdatedOn'=> date("Y-m-d h:i:sa"),
             )
         );
         return redirect()->route('pembayaranJenis.index')->with('status','Success!!');
@@ -124,13 +118,11 @@ class PembayaranJenisController extends Controller
     {
         //
         DB::table('PembayaranJenis')
-        ->where('idPembayaranJenis', $pembayaranJenis['idPembayaranJenis'])
-        ->update(array(
-            'hapus' => 1,
-            'UpdatedBy'=> $user->id,
-            'UpdatedOn'=> date("Y-m-d h:i:sa"),
-        )
-    );
-    return redirect()->route('pembayaranJenis.index')->with('status','Success!!');
+            ->where('idPembayaranJenis', $pembayaranJenis['idPembayaranJenis'])
+            ->update(array(
+                'hapus' => 1,
+            )
+        );
+        return redirect()->route('pembayaranJenis.index')->with('status','Success!!');
     }
 }

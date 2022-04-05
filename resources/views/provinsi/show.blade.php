@@ -29,17 +29,32 @@
                         <div class="form-group">
                            <label for="title">Nama Provinsi</label>
                            <input require type="text" name="nama" class="form-control" 
-                           value="{{old('nama',$provinsi->nama)}}" >
+                           value="{{old('nama',$provinsi->nama)}}" disabled>
                         </div>
 
                         <div class="form-group">
                             <label for="title">Kode Provinsi</label>
                            <input require type="text" name="kode" class="form-control" 
-                           value="{{old('kode',$provinsi->kode)}}" >
+                           value="{{old('kode',$provinsi->kode)}}" disabled>
                         </div>
+
+                        <div class="form-group">
+                            <label for="title">Pulau</label>
+                            <select name="idPulau" class="form-control" disabled>
+                                    <option value="">--Pilih Pulau--</option>
+                                    @foreach($dataPulau as $key => $data)
+                                    @if($provinsi->idPulau == $data->idPulau)
+                                    <option selected value="{{$data->idPulau}}"{{$data->nama == $data->idPulau? 'selected' :'' }}>{{$data->nama}}</option>
+                                    @else
+                                    <option value="{{$data->idPulau}}"{{$data->nama == $data->idPulau? 'selected' :'' }}>{{$data->nama}}</option>
+                                    @endif
+
+                                    @endforeach
+                            </select>
+                         </div>
                         <br>
 
-                       <button class="btn btn-primary">Tambah</button>
+                 
                     </form>
 
           
