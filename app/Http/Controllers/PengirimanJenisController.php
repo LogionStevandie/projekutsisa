@@ -17,7 +17,7 @@ class PengirimanJenisController extends Controller
     public function index()
     {
         //
-        $data = DB::table('PengirimanJenis')->get();
+        $data = DB::table('PengirimanJenis')->where('hapus',0)->get();
         
 
         return view('PengirimanJenis.index',[
@@ -46,16 +46,11 @@ class PengirimanJenisController extends Controller
     {
         //
         $data = $request->collect();
-        $user = Auth::user();
         
         DB::table('PengirimanJenis')
             ->insert(array(
                 'nama' => $data['nama'],
                 'keterangan' => $data['keterangan'],
-                'CreatedBy'=> $user->id,
-                'CreatedOn'=> date("Y-m-d h:i:sa"),
-                'UpdatedBy'=> $user->id,
-                'UpdatedOn'=> date("Y-m-d h:i:sa"),
             )
         );
         return redirect()->route('pengirimanJenis.index')->with('status','Success!!');
@@ -107,8 +102,6 @@ class PengirimanJenisController extends Controller
             ->update(array(
                 'nama' => $data['nama'],
                 'keterangan' => $data['keterangan'],
-                'UpdatedBy'=> $user->id,
-                'UpdatedOn'=> date("Y-m-d h:i:sa"),
             )
         );
         return redirect()->route('pengirimanJenis.index')->with('status','Success!!');
@@ -127,8 +120,6 @@ class PengirimanJenisController extends Controller
         ->where('idPengirimanJenis', $pengirimanJenis['idPengirimanJenis'])
         ->update(array(
             'hapus' => 1,
-            'UpdatedBy'=> $user->id,
-            'UpdatedOn'=> date("Y-m-d h:i:sa"),
         )
     );
     return redirect()->route('pengirimanJenis.index')->with('status','Success!!');

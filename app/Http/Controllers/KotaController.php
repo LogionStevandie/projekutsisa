@@ -21,9 +21,10 @@ class KotaController extends Controller
      */
     public function index()
     {
-        $data = DB::table('Kota')
-        ->select('Kota.*','Provinsi.nama as namaProvinsi','Provinsi.kode as kodeProvinsi')
-        ->join('Provisi', 'Kota.idProvinsi', '=', 'Provinsi.idProvinsi')
+        $data = DB::table('kota')
+        ->select('kota.*','Provinsi.nama as namaProvinsi','provisi.kode as kodeProvinsi')
+        ->join('provisi', 'kota.idProvinsi', '=', 'provisi.idProvinsi')
+        ->where('kota.hapus',0)
         ->get();
         
     return view('kota.index',[
@@ -39,8 +40,9 @@ class KotaController extends Controller
     public function create()
     {
         $dataProvinsi = DB::table('Provinsi')
-        ->get();
-        return view('kota.tambah'.[
+            ->where('hapus',1)
+            ->get();
+        return view('kota.tambah',[
             'dataProvinsi' => $dataProvinsi,
         ]);
     }
@@ -61,10 +63,6 @@ class KotaController extends Controller
             'nama' => $data['nama'],
             'kode' => $data['kode'],
             'idProvinsi' => $data['idProvinsi'],
-            'CreatedBy'=> $user->id,
-            'CreatedOn'=> date("Y-m-d h:i:sa"),
-            'UpdatedBy'=> $user->id,
-            'UpdatedOn'=> date("Y-m-d h:i:sa"),
         )
     );
     return redirect()->route('kota.index')->with('status','Success!!');
@@ -92,7 +90,8 @@ class KotaController extends Controller
     public function edit(Kota $kota)
     {
         $dataProvinsi = DB::table('Provinsi')
-        ->get();
+            ->where('hapus',1)
+            ->get();
         return view('kota.edit'.[
             'dataProvinsi' => $dataProvinsi,
             'kota' => $kota,
@@ -108,6 +107,8 @@ class KotaController extends Controller
      */
     public function update(Request $request, Kota $kota)
     {
+        $data = $request->collect();
+
         DB::table('Kota')
         ->where('idKota', $kota['idKota'])
         ->update(array(
@@ -115,8 +116,6 @@ class KotaController extends Controller
             'kode' => $data['kode'],
             'idProvinsi' => $data['idProvinsi'],
             'keterangan' => $data['keterangan'],
-            'UpdatedBy'=> $user->id,
-            'UpdatedOn'=> date("Y-m-d h:i:sa"),
         )
         );
         return redirect()->route('kota.index')->with('status','Success!!');
@@ -130,12 +129,10 @@ class KotaController extends Controller
      */
     public function destroy(Kota $kota)
     {
-        DB::table('Kota')
+        DB::table('kota')
         ->where('idKota', $kota['idKota'])
         ->update(array(
             'hapus' => 1,
-            'UpdatedBy'=> $user->id,
-            'UpdatedOn'=> date("Y-m-d h:i:sa"),
         )
         );
         return redirect()->route('kota.index')->with('status','Success!!');

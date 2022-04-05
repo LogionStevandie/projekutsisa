@@ -3,11 +3,11 @@
 @section('content')
 
 <div class="pagetitle">
-      <h1>Data Provinsi</h1>
+      <h1>Data Kota</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Provinsi</li>
+          <li class="breadcrumb-item">Kota</li>
           <li class="breadcrumb-item active">Index</li>
         </ol>
       </nav>
@@ -19,39 +19,24 @@
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Provinsi</h5>
+              <h5 class="card-title">Kota</h5>
               <!--<p>Add lightweight datatables to your project with using the <a href="https://github.com/fiduswriter/Simple-DataTables" target="_blank">Simple DataTables</a> library. Just add <code>.datatable</code> class name to any table you wish to conver to a datatable</p>-->
               
-                    <form action="{{route('provinsi.update',[$provinsi->idProvinsi])}}" method="POST" >
+                    <form action="{{route('kota.update',[$kota->idKota])}}" method="POST" >
                        @csrf
                        @method('PUT')
 
                         <div class="form-group">
-                           <label for="title">Nama Provinsi</label>
+                           <label for="title">Nama Kota</label>
                            <input require type="text" name="nama" class="form-control" 
-                           value="{{old('nama',$provinsi->nama)}}" >
+                           value="{{old('nama',$kota->nama)}}" >
                         </div>
 
                         <div class="form-group">
-                            <label for="title">Kode Provinsi</label>
+                            <label for="title">Kode Kota</label>
                            <input require type="text" name="kode" class="form-control" 
-                           value="{{old('kode',$provinsi->kode)}}" >
+                           value="{{old('kode',$kota->kode)}}" >
                         </div>
-
-                        <div class="form-group">
-                            <label for="title">Pulau</label>
-                            <select name="idPulau" class="form-control">
-                                    <option value="">--Pilih Pulau--</option>
-                                    @foreach($dataPulau as $key => $data)
-                                    @if($provinsi->idPulau == $data->idPulau)
-                                    <option selected value="{{$data->idPulau}}"{{$data->nama == $data->idPulau? 'selected' :'' }}>{{$data->nama}}</option>
-                                    @else
-                                    <option value="{{$data->idPulau}}"{{$data->nama == $data->idPulau? 'selected' :'' }}>{{$data->nama}}</option>
-                                    @endif
-
-                                    @endforeach
-                            </select>
-                         </div>
                         <br>
 
                        <button class="btn btn-primary">Save</button>

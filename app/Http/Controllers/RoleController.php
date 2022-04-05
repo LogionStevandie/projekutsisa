@@ -22,7 +22,7 @@ class RoleController extends Controller
     public function index()
     {
         //
-        $data = DB::table('Role')->get();
+        $data = DB::table('Role')->where('hapus',0)->get();
         
 
         return view('role.index',[
@@ -57,10 +57,6 @@ class RoleController extends Controller
             ->insert(array(
                 'nama' => $data['nama'],
                 'keterangan' => $data['keterangan'],
-                'CreatedBy'=> $user->id,
-                'CreatedOn'=> date("Y-m-d h:i:sa"),
-                'UpdatedBy'=> $user->id,
-                'UpdatedOn'=> date("Y-m-d h:i:sa"),
             )
         );
         return redirect()->route('role.index')->with('status','Success!!');
@@ -112,8 +108,6 @@ class RoleController extends Controller
             ->update(array(
                 'nama' => $data['nama'],
                 'keterangan' => $data['keterangan'],
-                'UpdatedBy'=> $user->id,
-                'UpdatedOn'=> date("Y-m-d h:i:sa"),
             )
         );
         return redirect()->route('role.index')->with('status','Success!!');
@@ -132,8 +126,6 @@ class RoleController extends Controller
             ->where('idRole', $role['idRole'])
             ->update(array(
                 'hapus' => 1,
-                'UpdatedBy'=> $user->id,
-                'UpdatedOn'=> date("Y-m-d h:i:sa"),
             )
         );
         return redirect()->route('role.index')->with('status','Success!!');

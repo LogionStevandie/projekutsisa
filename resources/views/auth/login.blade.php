@@ -66,7 +66,7 @@
                     <p class="text-center small">Enter your username & password to login</p>
                   </div>
 
-                  <form class="row g-3 needs-validation" method="POST" action="{{ route('login') }}">
+                  <form class="row g-3 needs-validation" method="POST" action="{{route('login')}}">
                     @csrf
             
                     <div class="col-12">

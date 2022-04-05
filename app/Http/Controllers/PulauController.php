@@ -22,7 +22,7 @@ class PulauController extends Controller
     public function index()
     {
         //
-        $data = DB::table('Pulau')->get();
+        $data = DB::table('Pulau')->where('hapus',0)->get();
         
 
         return view('pulau.index',[
@@ -58,10 +58,6 @@ class PulauController extends Controller
             ->insert(array(
                 'nama' => $data['nama'],
                 'kode' => $data['kode'],
-                /*'CreatedBy'=> $user->id,
-                'CreatedOn'=> date("Y-m-d h:i:sa"),
-                'UpdatedBy'=> $user->id,
-                'UpdatedOn'=> date("Y-m-d h:i:sa"),*/
             )
         );
         return redirect()->route('pulau.index')->with('status','Success!!');
@@ -106,15 +102,12 @@ class PulauController extends Controller
     {
         //
         $data = $request->collect();
-        $user = Auth::user();
         
         DB::table('Pulau')
             ->where('idPulau', $pulau['idPulau'])
             ->update(array(
                 'nama' => $data['nama'],
                 'kode' => $data['kode'],
-                /*'UpdatedBy'=> $user->id,
-                'UpdatedOn'=> date("Y-m-d h:i:sa"),*/
             )
         );
         return redirect()->route('pulau.index')->with('status','Success!!');
@@ -128,17 +121,14 @@ class PulauController extends Controller
      */
     public function destroy(Pulau $pulau)
     {
-        $pulau->delete();
         //
-        /*$user = Auth::user();
+        $user = Auth::user();
         DB::table('Pulau')
             ->where('idPulau', $pulau['idPulau'])
             ->update(array(
                 'hapus' => 1,
-                'UpdatedBy'=> $user->id,
-                'UpdatedOn'=> date("Y-m-d h:i:sa"),
             )
-        );*/
+        );
         return redirect()->route('pulau.index')->with('status','Success!!');
     }
 }

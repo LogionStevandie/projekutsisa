@@ -20,36 +20,26 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Provinsi</h5>
+              <!--<p>Add lightweight datatables to your project with using the <a href="https://github.com/fiduswriter/Simple-DataTables" target="_blank">Simple DataTables</a> library. Just add <code>.datatable</code> class name to any table you wish to conver to a datatable</p>-->
               
-              
-                    <form action="{{route('provinsi.store')}}" method="POST" >
-                      @csrf
+                    <form action="{{route('kota.update',[$kota->idProvinsi])}}" method="POST" >
+                       @csrf
+                       @method('PUT')
 
                         <div class="form-group">
                            <label for="title">Nama Provinsi</label>
                            <input require type="text" name="nama" class="form-control" 
-                           value="{{old('nama','')}}" >
+                           value="{{old('nama',$kota->nama)}}" >
                         </div>
 
                         <div class="form-group">
                             <label for="title">Kode Provinsi</label>
                            <input require type="text" name="kode" class="form-control" 
-                           value="{{old('kode','')}}" >
+                           value="{{old('kode',$kota->kode)}}" >
                         </div>
-
-                        <div class="form-group">
-                            <label for="title">Pulau</label>
-                            <select name="idPulau" class="form-control">
-                                    <option value="">--Pilih Pulau--</option>
-                                    @foreach($dataPulau as $key => $data)
-                                    <option value="{{$data->idPulau}}"{{$data->nama == $data->idPulau? 'selected' :'' }}>{{$data->nama}}</option>
-                                    @endforeach
-                            </select>
-                        </div>
-
                         <br>
 
-                       <button class="btn btn-primary">tambah</button>
+                       <button class="btn btn-primary">Tambah</button>
                     </form>
 
           

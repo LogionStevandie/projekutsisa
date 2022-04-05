@@ -21,7 +21,7 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $data = DB::table('Menu')->get();
+        $data = DB::table('Menu')->where('hapus',0)->get();
         
 
         return view('menu.index',[
@@ -55,10 +55,6 @@ class MenuController extends Controller
                 'nama' => $data['nama'],
                 'url' => $data['url'],
                 'keterangan' => $data['keterangan'],
-                'CreatedBy'=> $user->id,
-                'CreatedOn'=> date("Y-m-d h:i:sa"),
-                'UpdatedBy'=> $user->id,
-                'UpdatedOn'=> date("Y-m-d h:i:sa"),
             )
         );
         return redirect()->route('menu.index')->with('status','Success!!');
@@ -108,8 +104,6 @@ class MenuController extends Controller
                 'nama' => $data['nama'],
                 'url' => $data['url'],
                 'keterangan' => $data['keterangan'],
-                'UpdatedBy'=> $user->id,
-                'UpdatedOn'=> date("Y-m-d h:i:sa"),
             )
         );
         return redirect()->route('menu.index')->with('status','Success!!');
@@ -124,11 +118,9 @@ class MenuController extends Controller
     public function destroy(Menu $menu)
     {
         DB::table('Menu')
-        ->where('idMenu', $pulau['idMenu'])
+        ->where('idMenu', $menu['idMenu'])
         ->update(array(
             'hapus' => 1,
-            'UpdatedBy'=> $user->id,
-            'UpdatedOn'=> date("Y-m-d h:i:sa"),
         )
     );
     return redirect()->route('menu.index')->with('status','Success!!');

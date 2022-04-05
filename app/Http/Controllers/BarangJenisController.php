@@ -23,7 +23,9 @@ class BarangJenisController extends Controller
     public function index()
     {
         //
-        $data = DB::table('BarangJenis')->get();
+        $data = DB::table('barangJenis')
+            ->where('hapus',0)
+            ->get();
         
 
         return view('barangJenis.index',[
@@ -50,19 +52,13 @@ class BarangJenisController extends Controller
      */
     public function store(Request $request)
     {
-        //$user = Auth::user();
         $data = $request->collect();
-        $user = Auth::user();
         
-        DB::table('BarangJenis')
+        DB::table('barangJenis')
             ->insert(array(
                 'nama' => $data['nama'],
                 'kode' => $data['kode'],
                 'keterangan' => $data['keterangan'],
-                'CreatedBy'=> $user->id,
-                'CreatedOn'=> date("Y-m-d h:i:sa"),
-                'UpdatedBy'=> $user->id,
-                'UpdatedOn'=> date("Y-m-d h:i:sa"),
             )
         );
         return redirect()->route('barangJenis.index')->with('status','Success!!');
@@ -109,14 +105,12 @@ class BarangJenisController extends Controller
         $data = $request->collect();
         $user = Auth::user();
         
-        DB::table('BarangJenis')
+        DB::table('barangJenis')
             ->where('idBarangJenis', $barangJenis['idBarangJenis'])
             ->update(array(
                 'nama' => $data['nama'],
                 'kode' => $data['kode'],
                 'keterangan' => $data['keterangan'],
-                'UpdatedBy'=> $user->id,
-                'UpdatedOn'=> date("Y-m-d h:i:sa"),
             )
         );
         return redirect()->route('barangJenis.index')->with('status','Success!!');
@@ -136,8 +130,6 @@ class BarangJenisController extends Controller
             ->where('idBarangJenis', $barangJenis['idBarangJenis'])
             ->update(array(
                 'hapus' => 1,
-                'UpdatedBy'=> $user->id,
-                'UpdatedOn'=> date("Y-m-d h:i:sa"),
             )
         );
         return redirect()->route('barangJenis.index')->with('status','Success!!');

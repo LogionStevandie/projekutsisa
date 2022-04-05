@@ -20,6 +20,7 @@ class ProvinsiController extends Controller
         $data = DB::table('Provinsi')
             ->select('Provinsi.*','Pulau.nama as namaPulau','Pulau.kode as kodePulau')
             ->join('Pulau', 'Provinsi.idPulau', '=', 'pulau.idPulau')
+            ->where('Provinsi.hapus',0)
             ->get();
             
         return view('provinsi.index',[
@@ -34,9 +35,10 @@ class ProvinsiController extends Controller
      */
     public function create()
     {
-        $dataPulau = DB::table('Pulau')
+        $dataPulau = DB::table('pulau')
+            ->where('hapus','0')
             ->get();
-        return view('provinsi.tambah'.[
+        return view('provinsi.tambah',[
             'dataPulau' => $dataPulau,
         ]);
 
@@ -91,9 +93,10 @@ class ProvinsiController extends Controller
     public function edit(Provinsi $provinsi)
     {
         //
-        $dataPulau = DB::table('Pulau')
+        $dataPulau = DB::table('pulau')
+            ->where('hapus','0')
             ->get();
-        return view('provinsi.edit'.[
+        return view('provinsi.edit',[
             'dataPulau' => $dataPulau,
             'provinsi' => $provinsi,
         ]);
@@ -117,9 +120,7 @@ class ProvinsiController extends Controller
             'nama' => $data['nama'],
             'kode' => $data['kode'],
             'idPulau' => $data['idPulau'],
-            'keterangan' => $data['keterangan'],
-            'UpdatedBy'=> $user->id,
-            'UpdatedOn'=> date("Y-m-d h:i:sa"),
+          //'keterangan' => $data['keterangan'],
         )
         );
         return redirect()->route('provinsi.index')->with('status','Success!!');
@@ -139,8 +140,6 @@ class ProvinsiController extends Controller
         ->where('idProvinsi', $provinsi['idProvinsi'])
         ->update(array(
             'hapus' => 1,
-            'UpdatedBy'=> $user->id,
-            'UpdatedOn'=> date("Y-m-d h:i:sa"),
         )
     );
     return redirect()->route('provinsi.index')->with('status','Success!!');
