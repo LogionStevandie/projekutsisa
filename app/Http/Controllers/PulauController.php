@@ -5,10 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Pulau;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class PulauController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -53,10 +58,10 @@ class PulauController extends Controller
             ->insert(array(
                 'nama' => $data['nama'],
                 'kode' => $data['kode'],
-                'CreatedBy'=> $user->id,
+                /*'CreatedBy'=> $user->id,
                 'CreatedOn'=> date("Y-m-d h:i:sa"),
                 'UpdatedBy'=> $user->id,
-                'UpdatedOn'=> date("Y-m-d h:i:sa"),
+                'UpdatedOn'=> date("Y-m-d h:i:sa"),*/
             )
         );
         return redirect()->route('pulau.index')->with('status','Success!!');
@@ -108,8 +113,8 @@ class PulauController extends Controller
             ->update(array(
                 'nama' => $data['nama'],
                 'kode' => $data['kode'],
-                'UpdatedBy'=> $user->id,
-                'UpdatedOn'=> date("Y-m-d h:i:sa"),
+                /*'UpdatedBy'=> $user->id,
+                'UpdatedOn'=> date("Y-m-d h:i:sa"),*/
             )
         );
         return redirect()->route('pulau.index')->with('status','Success!!');
@@ -123,8 +128,9 @@ class PulauController extends Controller
      */
     public function destroy(Pulau $pulau)
     {
-        //$pulau->delete();
+        $pulau->delete();
         //
+        /*$user = Auth::user();
         DB::table('Pulau')
             ->where('idPulau', $pulau['idPulau'])
             ->update(array(
@@ -132,7 +138,7 @@ class PulauController extends Controller
                 'UpdatedBy'=> $user->id,
                 'UpdatedOn'=> date("Y-m-d h:i:sa"),
             )
-        );
+        );*/
         return redirect()->route('pulau.index')->with('status','Success!!');
     }
 }

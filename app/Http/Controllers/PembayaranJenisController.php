@@ -2,19 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BarangJenis;
+use App\Models\PembayaranJenis;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
-class BarangJenisController extends Controller
+class PembayaranJenisController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -23,10 +17,10 @@ class BarangJenisController extends Controller
     public function index()
     {
         //
-        $data = DB::table('BarangJenis')->get();
+        $data = DB::table('PembayaranJenis')->get();
         
 
-        return view('barangJenis.index',[
+        return view('pembayaranJenis.index',[
             'data' => $data,
         ]);
     }
@@ -39,7 +33,7 @@ class BarangJenisController extends Controller
     public function create()
     {
         //
-        return view('barangJenis.tambah');
+        return view('pembayaranJenis.tambah');
     }
 
     /**
@@ -50,14 +44,13 @@ class BarangJenisController extends Controller
      */
     public function store(Request $request)
     {
-        //$user = Auth::user();
+        //
         $data = $request->collect();
         $user = Auth::user();
         
-        DB::table('BarangJenis')
+        DB::table('PembayaranJenis')
             ->insert(array(
                 'nama' => $data['nama'],
-                'kode' => $data['kode'],
                 'keterangan' => $data['keterangan'],
                 'CreatedBy'=> $user->id,
                 'CreatedOn'=> date("Y-m-d h:i:sa"),
@@ -65,34 +58,34 @@ class BarangJenisController extends Controller
                 'UpdatedOn'=> date("Y-m-d h:i:sa"),
             )
         );
-        return redirect()->route('barangJenis.index')->with('status','Success!!');
+        return redirect()->route('pembayaranJenis.index')->with('status','Success!!');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\BarangJenis  $barangJenis
+     * @param  \App\Models\PembayaranJenis  $pembayaranJenis
      * @return \Illuminate\Http\Response
      */
-    public function show(BarangJenis $barangJenis)
+    public function show(PembayaranJenis $pembayaranJenis)
     {
         //
-        return view('barangJenis.detail',[
-            'barangJenis' => $barangJenis,
+        return view('pembayaranJenis.detail',[
+            'pembayaranJenis' => $pembayaranJenis,
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\BarangJenis  $barangJenis
+     * @param  \App\Models\PembayaranJenis  $pembayaranJenis
      * @return \Illuminate\Http\Response
      */
-    public function edit(BarangJenis $barangJenis)
+    public function edit(PembayaranJenis $pembayaranJenis)
     {
         //
-        return view('barangJenis.edit',[
-            'barangJenis' => $barangJenis,
+        return view('pembayaranJenis.edit',[
+            'pembayaranJenis' => $pembayaranJenis,
         ]);
     }
 
@@ -100,46 +93,44 @@ class BarangJenisController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\BarangJenis  $barangJenis
+     * @param  \App\Models\PembayaranJenis  $pembayaranJenis
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BarangJenis $barangJenis)
+    public function update(Request $request, PembayaranJenis $pembayaranJenis)
     {
         //
         $data = $request->collect();
         $user = Auth::user();
         
-        DB::table('BarangJenis')
-            ->where('idBarangJenis', $barangJenis['idBarangJenis'])
+        DB::table('PembayaranJenis')
+            ->where('idPembayaranJenis', $pembayaranJenis['idPembayaranJenis'])
             ->update(array(
                 'nama' => $data['nama'],
-                'kode' => $data['kode'],
                 'keterangan' => $data['keterangan'],
                 'UpdatedBy'=> $user->id,
                 'UpdatedOn'=> date("Y-m-d h:i:sa"),
             )
         );
-        return redirect()->route('barangJenis.index')->with('status','Success!!');
+        return redirect()->route('pembayaranJenis.index')->with('status','Success!!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\BarangJenis  $barangJenis
+     * @param  \App\Models\PembayaranJenis  $pembayaranJenis
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BarangJenis $barangJenis)
+    public function destroy(PembayaranJenis $pembayaranJenis)
     {
         //
-        $user = Auth::user();
-        DB::table('barangJenis')
-            ->where('idBarangJenis', $barangJenis['idBarangJenis'])
-            ->update(array(
-                'hapus' => 1,
-                'UpdatedBy'=> $user->id,
-                'UpdatedOn'=> date("Y-m-d h:i:sa"),
-            )
-        );
-        return redirect()->route('barangJenis.index')->with('status','Success!!');
+        DB::table('PembayaranJenis')
+        ->where('idPembayaranJenis', $pembayaranJenis['idPembayaranJenis'])
+        ->update(array(
+            'hapus' => 1,
+            'UpdatedBy'=> $user->id,
+            'UpdatedOn'=> date("Y-m-d h:i:sa"),
+        )
+    );
+    return redirect()->route('pembayaranJenis.index')->with('status','Success!!');
     }
 }

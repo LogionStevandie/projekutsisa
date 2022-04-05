@@ -4,9 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Kota;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class KotaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -46,6 +53,9 @@ class KotaController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $request->collect();
+        $user = Auth::user();
+
         DB::table('Kota')
         ->insert(array(
             'nama' => $data['nama'],

@@ -5,10 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class MenuController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -31,9 +36,7 @@ class MenuController extends Controller
      */
     public function create()
     {
-        return view('menu.index'. [
-            'data' => $data,
-        ]);
+        return view('menu.index');
     }
 
     /**

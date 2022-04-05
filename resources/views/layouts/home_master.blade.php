@@ -44,7 +44,7 @@
   <!-- End Header -->
 
   <!-- ======= Sidebar ======= -->
-  @include('layouts.header')
+  @include('layouts.sidebar')
   <!-- End Sidebar-->
 
   <main id="main" class="main">
@@ -66,7 +66,6 @@
   <script src="{{asset('NiceAdmin/assets/vendor/simple-datatables/simple-datatables.js')}}"></script>
   <script src="{{asset('NiceAdmin/assets/vendor/tinymce/tinymce.min.js')}}"></script>
   <script src="{{asset('NiceAdmin/assets/vendor/php-email-form/validate.js')}}"></script>
-
   <!-- Template Main JS File -->
   <script src="{{asset('NiceAdmin/assets/js/main.js')}}"></script>
 

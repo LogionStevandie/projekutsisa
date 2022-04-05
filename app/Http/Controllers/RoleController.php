@@ -4,9 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +22,12 @@ class RoleController extends Controller
     public function index()
     {
         //
+        $data = DB::table('Role')->get();
+        
+
+        return view('role.index',[
+            'data' => $data,
+        ]);
     }
 
     /**
@@ -25,6 +38,7 @@ class RoleController extends Controller
     public function create()
     {
         //
+        return view('role.tambah');
     }
 
     /**
@@ -36,6 +50,20 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         //
+        $data = $request->collect();
+        $user = Auth::user();
+        
+        DB::table('Role')
+            ->insert(array(
+                'nama' => $data['nama'],
+                'keterangan' => $data['keterangan'],
+                'CreatedBy'=> $user->id,
+                'CreatedOn'=> date("Y-m-d h:i:sa"),
+                'UpdatedBy'=> $user->id,
+                'UpdatedOn'=> date("Y-m-d h:i:sa"),
+            )
+        );
+        return redirect()->route('role.index')->with('status','Success!!');
     }
 
     /**
@@ -47,6 +75,9 @@ class RoleController extends Controller
     public function show(Role $role)
     {
         //
+        return view('role.detail', [
+            'role' => $role
+        ]);
     }
 
     /**
@@ -58,6 +89,9 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         //
+        return view('role.edit',[
+            'role' => $role,
+        ]);
     }
 
     /**
@@ -70,6 +104,19 @@ class RoleController extends Controller
     public function update(Request $request, Role $role)
     {
         //
+        $data = $request->collect();
+        $user = Auth::user();
+        
+        DB::table('Role')
+            ->where('idRole', $role['idRole'])
+            ->update(array(
+                'nama' => $data['nama'],
+                'keterangan' => $data['keterangan'],
+                'UpdatedBy'=> $user->id,
+                'UpdatedOn'=> date("Y-m-d h:i:sa"),
+            )
+        );
+        return redirect()->route('role.index')->with('status','Success!!');
     }
 
     /**
@@ -81,5 +128,14 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         //
+        DB::table('Role')
+            ->where('idRole', $role['idRole'])
+            ->update(array(
+                'hapus' => 1,
+                'UpdatedBy'=> $user->id,
+                'UpdatedOn'=> date("Y-m-d h:i:sa"),
+            )
+        );
+        return redirect()->route('role.index')->with('status','Success!!');
     }
 }

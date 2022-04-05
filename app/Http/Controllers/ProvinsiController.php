@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Provinsi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ProvinsiController extends Controller
 {
@@ -48,16 +50,18 @@ class ProvinsiController extends Controller
      */
     public function store(Request $request)
     {
-        //       
+        //    
+        $data = $request->collect();   
+        $user = Auth::user();
         DB::table('Provinsi')
             ->insert(array(
                 'nama' => $data['nama'],
                 'kode' => $data['kode'],
                 'idPulau' => $data['idPulau'],
-                'CreatedBy'=> $user->id,
-                'CreatedOn'=> date("Y-m-d h:i:sa"),
-                'UpdatedBy'=> $user->id,
-                'UpdatedOn'=> date("Y-m-d h:i:sa"),
+                //'CreatedBy'=> $user->id,
+                //'CreatedOn'=> date("Y-m-d h:i:sa"),
+                //'UpdatedBy'=> $user->id,
+                //'UpdatedOn'=> date("Y-m-d h:i:sa"),
             )
         );
         return redirect()->route('provinsi.index')->with('status','Success!!');
@@ -105,6 +109,8 @@ class ProvinsiController extends Controller
      */
     public function update(Request $request, Provinsi $provinsi)
     {
+        $data = $request->collect();   
+        $user = Auth::user();
         DB::table('Provinsi')
         ->where('idProvinsi', $provinsi['idProvinsi'])
         ->update(array(
@@ -127,6 +133,8 @@ class ProvinsiController extends Controller
      */
     public function destroy(Provinsi $provinsi)
     {
+         
+        $user = Auth::user();
         DB::table('Provinsi')
         ->where('idProvinsi', $provinsi['idProvinsi'])
         ->update(array(
