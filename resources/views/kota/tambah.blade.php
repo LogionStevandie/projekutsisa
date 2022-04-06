@@ -8,7 +8,7 @@
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
           <li class="breadcrumb-item">Kota</li>
-          <li class="breadcrumb-item active">Index</li>
+          <li class="breadcrumb-item active">Tambah</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -34,7 +34,7 @@
                         <div class="form-group">
                             <label for="title">Kode Kota</label>
                            <input require type="text" name="kode" class="form-control" 
-                           value="{{old('kode','')}}" >
+                           value="{{old('kode','')}}">
                         </div>
 
                         <div class="form-group">

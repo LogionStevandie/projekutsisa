@@ -63,11 +63,11 @@ class PembayaranJenisController extends Controller
      * @param  \App\Models\PembayaranJenis  $pembayaranJenis
      * @return \Illuminate\Http\Response
      */
-    public function show(PembayaranJenis $pembayaranJenis)
+    public function show(PembayaranJenis $pembayaranJeni)
     {
         //
-        return view('pembayaranJenis.detail',[
-            'pembayaranJenis' => $pembayaranJenis,
+        return view('pembayaranJenis.show',[
+            'pembayaranJenis' => $pembayaranJeni,
         ]);
     }
 
@@ -77,11 +77,11 @@ class PembayaranJenisController extends Controller
      * @param  \App\Models\PembayaranJenis  $pembayaranJenis
      * @return \Illuminate\Http\Response
      */
-    public function edit(PembayaranJenis $pembayaranJenis)
+    public function edit(PembayaranJenis $pembayaranJeni)
     {
         //
         return view('pembayaranJenis.edit',[
-            'pembayaranJenis' => $pembayaranJenis,
+            'pembayaranJenis' => $pembayaranJeni,
         ]);
     }
 
@@ -92,14 +92,14 @@ class PembayaranJenisController extends Controller
      * @param  \App\Models\PembayaranJenis  $pembayaranJenis
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PembayaranJenis $pembayaranJenis)
+    public function update(Request $request, PembayaranJenis $pembayaranJeni)
     {
         //
         $data = $request->collect();
         $user = Auth::user();
         
         DB::table('PembayaranJenis')
-            ->where('idPembayaranJenis', $pembayaranJenis['idPembayaranJenis'])
+            ->where('idPembayaranJenis', $pembayaranJeni['idPembayaranJenis'])
             ->update(array(
                 'nama' => $data['nama'],
                 'keterangan' => $data['keterangan'],
@@ -114,11 +114,11 @@ class PembayaranJenisController extends Controller
      * @param  \App\Models\PembayaranJenis  $pembayaranJenis
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PembayaranJenis $pembayaranJenis)
+    public function destroy(PembayaranJenis $pembayaranJeni)
     {
         //
         DB::table('PembayaranJenis')
-            ->where('idPembayaranJenis', $pembayaranJenis['idPembayaranJenis'])
+            ->where('idPembayaranJenis', $pembayaranJeni['idPembayaranJenis'])
             ->update(array(
                 'hapus' => 1,
             )

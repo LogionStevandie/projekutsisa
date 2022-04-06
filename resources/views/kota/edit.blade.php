@@ -8,7 +8,7 @@
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
           <li class="breadcrumb-item">Kota</li>
-          <li class="breadcrumb-item active">Index</li>
+          <li class="breadcrumb-item active">Edit</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -37,6 +37,21 @@
                            <input require type="text" name="kode" class="form-control" 
                            value="{{old('kode',$kota->kode)}}" >
                         </div>
+
+                         <div class="form-group">
+                            <label for="title">Provinsi</label>
+                            <select name="idProvinsi" class="form-control">
+                                    <option value="">--Pilih Provinsi--</option>
+                                    @foreach($dataProvinsi as $key => $data)
+                                    @if($kota->idProvinsi==$data->idProvinsi)
+                                    <option selected value="{{$data->idProvinsi}}"{{$data->nama == $data->idProvinsi? 'selected' :'' }}>{{$data->nama}}</option>
+                                    @else
+                                    <option value="{{$data->idProvinsi}}"{{$data->nama == $data->idProvinsi? 'selected' :'' }}>{{$data->nama}}</option>
+                                    @endif
+                                    @endforeach
+                            </select>
+                        </div>
+
                         <br>
 
                        <button class="btn btn-primary">Save</button>

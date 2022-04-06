@@ -72,7 +72,7 @@ class PulauController extends Controller
     public function show(Pulau $pulau)
     {
         //
-        return view('pulau.detail',[
+        return view('pulau.show',[
             'pulau' => $pulau,
         ]);
     }

@@ -8,7 +8,7 @@
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
           <li class="breadcrumb-item">Provinsi</li>
-          <li class="breadcrumb-item active">Index</li>
+           <li class="breadcrumb-item active">Show</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -40,7 +40,7 @@
 
                         <div class="form-group">
                             <label for="title">Pulau</label>
-                            <select name="idPulau" class="form-control" disabled>
+                            <select name="idPulau" class="form-control"disabled>
                                     <option value="">--Pilih Pulau--</option>
                                     @foreach($dataPulau as $key => $data)
                                     @if($provinsi->idPulau == $data->idPulau)
@@ -54,7 +54,7 @@
                          </div>
                         <br>
 
-                 
+                       <button class="btn btn-primary">Save</button>
                     </form>
 
           

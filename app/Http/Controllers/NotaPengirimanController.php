@@ -73,7 +73,90 @@ class NotaPengirimanController extends Controller
     public function store(Request $request)
     {
         //
+        $data = $request->collect();
+        //dd($data);
+        //echo $data['barang'][0];
+        //echo count($data['jumlah']);
+        $year = date("Y");
+        $month = date("m");
+
+        /*$getLokasi = DB::table('gudang')
+            ->where('gudang.id', '=', $user->idGudang)
+            ->get();
+        */
+
+        $dataLokasi = DB::table('MGudang')
+            ->select('MKota.*','MPerusahaan.cnames as perusahaanCode')
+            ->join('MKota', 'MGudang.cidkota', '=', 'MKota.cidkota')
+            ->join('MPerusahaan', 'MGudang.cidp', '=', 'MPerusahaan.MPerusahaanID')
+            ->where('MGudang.MGudangID', '=', $user->MGudangID)
+            ->get();
         
+        $dataPermintaan = DB::table('purchase_request')
+            ->where('name', 'like', 'NPP/'.$dataLokasi[0]->perusahaanCode.'/'.$dataLokasi[0]->ckode.'/'.$year.'/'.$month."/%")
+            ->get();
+        
+
+        $totalIndex = str_pad(strval(count($dataPermintaan) + 1),4,'0',STR_PAD_LEFT);
+
+        $idpr = DB::table('purchase_request')->insertGetId(array(
+            'name' => 'NPP/'.$dataLokasi[0]->perusahaanCode.'/'.$dataLokasi[0]->ckode.'/'.$year.'/'.$month."/".$totalIndex,
+            'MGudangID' => $data['gudang'],
+            'approved' => 0,
+            'approvedAkhir' => 0,
+            'hapus' => 0,
+            'tanggalDibutuhkan' => $data['tanggalDibutuhkan'],
+            'tanggalAkhirDibutuhkan' => $data['tanggalAkhir'],
+            'jenisProses' => $data['jenisProses'],
+            'created_by'=> $user->id,
+            'created_on'=> date("Y-m-d h:i:sa"),
+            'updated_by'=> $user->id,
+            'updated_on'=> date("Y-m-d h:i:sa"),
+            )
+        ); 
+
+        $totalHarga = 0;
+
+        for($i = 0; $i < count($data['itemId']); $i++){
+            DB::table('purchase_request_detail')->insert(array(
+                'idPurchaseRequest' => $idpr,
+                'jumlah' => $data['itemTotal'][$i],
+                'ItemID' => $data['itemId'][$i],
+                'harga' => $data['itemHarga'][$i],
+                'keterangan_jasa' => $data['itemKeterangan'][$i],
+                )
+            ); 
+            $totalHarga += $data['itemHarga'][$i] * $data['itemTotal'][$i];
+            /*if(isset($data['barang'][$i])){
+                DB::table('purchase_request_detail')->insert(array(
+                    'idPurchaseRequest' => $idpr,
+                    'jumlah' => $data['jumlah'][$i],
+                    'ItemID' => $data['barang'][$i],
+                    'jasa' => 0,
+                    'harga' => $data['harga'][$i],
+                    )
+               ); 
+            }
+            elseif(isset($data['jasa'][$i])){
+                DB::table('purchase_request_detail')->insert(array(
+                    'idPurchaseRequest' => $idpr,
+                    'jasa' => 1,
+                    'jumlah' =>1,
+                    'keterangan_jasa' => $data['keterangan'][$i],
+                    'harga' => $data['harga'][$i],
+                    )
+               ); 
+            }*/
+            
+        }
+
+        DB::table('purchase_request')
+            ->where('id', $idpr)
+            ->update([
+                'totalHarga' =>  $totalHarga,
+        ]);
+
+        return redirect()->route('purchaseRequest.index')->with('status','Success!!');
     }
 
     /**

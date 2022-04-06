@@ -22,9 +22,9 @@ class KotaController extends Controller
     public function index()
     {
         $data = DB::table('kota')
-        ->select('kota.*','Provinsi.nama as namaProvinsi','provisi.kode as kodeProvinsi')
-        ->join('provisi', 'kota.idProvinsi', '=', 'provisi.idProvinsi')
-        ->where('kota.hapus',0)
+        ->select('kota.*','Provinsi.nama as namaProvinsi','provinsi.kode as kodeProvinsi')
+        ->join('provinsi','kota.idProvinsi', '=', 'provinsi.idProvinsi')
+        ->where('kota.hapus',"=",0)
         ->get();
         
     return view('kota.index',[
@@ -40,7 +40,7 @@ class KotaController extends Controller
     public function create()
     {
         $dataProvinsi = DB::table('Provinsi')
-            ->where('hapus',1)
+            ->where('hapus',0)
             ->get();
         return view('kota.tambah',[
             'dataProvinsi' => $dataProvinsi,
@@ -74,10 +74,14 @@ class KotaController extends Controller
      * @param  \App\Models\Kota  $kota
      * @return \Illuminate\Http\Response
      */
-    public function show(Kota $kota)
+    public function show(Kota $kotum)
     {
-        return view('kota.detail',[
-            'kota' => $kota,
+         $dataProvinsi = DB::table('Provinsi')
+            ->where('hapus',0)
+            ->get();
+        return view('kota.show',[
+            'dataProvinsi' => $dataProvinsi,
+            'kota' => $kotum,
         ]);
     }
 
@@ -87,14 +91,14 @@ class KotaController extends Controller
      * @param  \App\Models\Kota  $kota
      * @return \Illuminate\Http\Response
      */
-    public function edit(Kota $kota)
+    public function edit(Kota $kotum)
     {
         $dataProvinsi = DB::table('Provinsi')
-            ->where('hapus',1)
+            ->where('hapus',0)
             ->get();
-        return view('kota.edit'.[
+        return view('kota.edit',[
             'dataProvinsi' => $dataProvinsi,
-            'kota' => $kota,
+            'kota' => $kotum,
         ]);
     }
 
@@ -105,17 +109,17 @@ class KotaController extends Controller
      * @param  \App\Models\Kota  $kota
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Kota $kota)
+    public function update(Request $request, Kota $kotum)
     {
         $data = $request->collect();
 
         DB::table('Kota')
-        ->where('idKota', $kota['idKota'])
+        ->where('idKota', $kotum['idKota'])
         ->update(array(
             'nama' => $data['nama'],
             'kode' => $data['kode'],
-            'idProvinsi' => $data['idProvinsi'],
-            'keterangan' => $data['keterangan'],
+            'idProvinsi' => $data['idProvinsi']
+            //'keterangan' => $data['keterangan'],
         )
         );
         return redirect()->route('kota.index')->with('status','Success!!');
@@ -127,10 +131,10 @@ class KotaController extends Controller
      * @param  \App\Models\Kota  $kota
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Kota $kota)
+    public function destroy(Kota $kotum)
     {
         DB::table('kota')
-        ->where('idKota', $kota['idKota'])
+        ->where('idKota', $kotum['idKota'])
         ->update(array(
             'hapus' => 1,
         )

@@ -8,7 +8,7 @@
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
           <li class="breadcrumb-item">Pulau</li>
-          <li class="breadcrumb-item active">Index</li>
+          <li class="breadcrumb-item active">Show</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -29,17 +29,15 @@
                         <div class="form-group">
                            <label for="title">Nama Pulau</label>
                            <input require type="text" name="nama" class="form-control" 
-                           value="{{old('nama',$pulau->nama)}}" >
+                           value="{{old('nama',$pulau->nama)}}" disabled>
                         </div>
 
                         <div class="form-group">
                             <label for="title">Kode Pulau</label>
                            <input require type="text" name="kode" class="form-control" 
-                           value="{{old('kode',$pulau->kode)}}" >
+                           value="{{old('kode',$pulau->kode)}}"disabled >
                         </div>
                         <br>
-
-                       <button class="btn btn-primary">Tambah</button>
                     </form>
 
           

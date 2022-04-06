@@ -8,7 +8,7 @@
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
           <li class="breadcrumb-item">PembayaranJenis</li>
-          <li class="breadcrumb-item active">Index</li>
+           <li class="breadcrumb-item active">Show</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -29,17 +29,17 @@
                         <div class="form-group">
                            <label for="title">Nama Pembayaran Jenis</label>
                            <input require type="text" name="nama" class="form-control" 
-                           value="{{old('nama',$pembayaranJenis->nama)}}" >
+                           value="{{old('nama',$pembayaranJenis->nama)}}" disabled >
                         </div>
 
                         <div class="form-group">
                             <label for="title">keterangan</label>
                            <input require type="text" name="keterangan" class="form-control" 
-                           value="{{old('keterangan',$pembayaranJenis->keterangan)}}" >
+                           value="{{old('keterangan',$pembayaranJenis->keterangan)}}" disabled>
                         </div>
                         <br>
 
-                       <button class="btn btn-primary">Tambah</button>
+               
                     </form>
 
           

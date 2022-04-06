@@ -79,7 +79,11 @@ class ProvinsiController extends Controller
     public function show(Provinsi $provinsi)
     {
         //
-        return view('provinsi.detail',[
+        $dataPulau = DB::table('pulau')
+            ->where('hapus','0')
+            ->get();
+        return view('provinsi.show',[
+            'dataPulau' => $dataPulau,
             'provinsi' => $provinsi,
         ]);
     }

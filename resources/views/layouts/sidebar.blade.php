@@ -37,6 +37,16 @@
               <i class="bi bi-circle"></i><span>provinsi</span>
             </a>
           </li>
+           <li>
+            <a href="{{route('kota.index')}}">
+              <i class="bi bi-circle"></i><span>kota</span>
+            </a>
+          </li>
+           <li>
+            <a href="{{route('pembayaranJenis.index')}}">
+              <i class="bi bi-circle"></i><span>Pembayaran Jenis</span>
+            </a>
+          </li>
     
         </ul>
       </li><!-- End Forms Nav -->
