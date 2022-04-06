@@ -103,7 +103,6 @@
                            value="{{old('berat','')}}" >
                         </div>
 
-
                         <div class="form-group">
                            <label for="title">Harga</label>
                            <input require type="number" step=".01" name="harga" class="form-control" id="hargaPesanan"
