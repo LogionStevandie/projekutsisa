@@ -23,7 +23,6 @@ class PulauController extends Controller
     {
         //
         $data = DB::table('Pulau')->where('hapus',0)->get();
-        
 
         return view('pulau.index',[
             'data' => $data,

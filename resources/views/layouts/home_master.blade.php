@@ -26,6 +26,8 @@
   <link href="{{asset('NiceAdmin/assets/vendor/remixicon/remixicon.css')}}" rel="stylesheet">
   <link href="{{asset('NiceAdmin/assets/vendor/simple-datatables/style.css')}}" rel="stylesheet">
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
   <!-- Template Main CSS File -->
   <link href="{{asset('NiceAdmin/assets/css/style.css')}}" rel="stylesheet">
 

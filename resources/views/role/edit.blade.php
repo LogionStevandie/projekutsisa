@@ -8,7 +8,7 @@
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
           <li class="breadcrumb-item">Role</li>
-          <li class="breadcrumb-item active">Index</li>
+          <li class="breadcrumb-item active">Edit</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -33,9 +33,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="title">Kode Role</label>
-                           <input require type="text" name="kode" class="form-control" 
-                           value="{{old('kode',$role->kode)}}" >
+                            <label for="title">keterangan</label>
+                           <input require type="text" name="keterangan" class="form-control" 
+                           value="{{old('kode',$role->keterangan)}}" >
                         </div>
                         <br>
 

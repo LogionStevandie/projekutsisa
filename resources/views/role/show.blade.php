@@ -8,7 +8,7 @@
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
           <li class="breadcrumb-item">Role</li>
-          <li class="breadcrumb-item active">Index</li>
+          <li class="breadcrumb-item active">Show</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -22,24 +22,22 @@
               <h5 class="card-title">Role</h5>
               <!--<p>Add lightweight datatables to your project with using the <a href="https://github.com/fiduswriter/Simple-DataTables" target="_blank">Simple DataTables</a> library. Just add <code>.datatable</code> class name to any table you wish to conver to a datatable</p>-->
               
-                    <form action="{{route('role.update',[$role->idRole])}}" method="POST" >
+                    <form action="{{route('role.show',[$role->idRole])}}" method="POST" >
                        @csrf
                        @method('PUT')
 
                         <div class="form-group">
                            <label for="title">Nama Role</label>
                            <input require type="text" name="nama" class="form-control" 
-                           value="{{old('nama',$role->nama)}}" >
+                           value="{{old('nama',$role->nama)}}" disabled>
                         </div>
 
                         <div class="form-group">
-                            <label for="title">Kode Role</label>
-                           <input require type="text" name="kode" class="form-control" 
-                           value="{{old('kode',$role->kode)}}" >
+                            <label for="title">keterangan</label>
+                           <input require type="text" name="keterangan" class="form-control" 
+                           value="{{old('kode',$role->keterangan)}}" disabled>
                         </div>
                         <br>
-
-                       <button class="btn btn-primary">Tambah</button>
                     </form>
 
           

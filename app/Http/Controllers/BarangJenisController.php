@@ -31,6 +31,18 @@ class BarangJenisController extends Controller
         return view('barangJenis.index',[
             'data' => $data,
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('barangJenis.index', $user->id, $user->idRole);
+        
+        if($check){
+            return view('barangJenis.index',[
+                'data' => $data,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Barang Jenis Master');
+        }
     }
 
     /**
@@ -42,6 +54,16 @@ class BarangJenisController extends Controller
     {
         //
         return view('barangJenis.tambah');
+
+        $user = Auth::user();
+        $check = $this->checkAccess('barangJenis.create', $user->id, $user->idRole);
+        
+        if($check){
+            return view('barangJenis.tambah');
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Barang Jenis Master');
+        }
     }
 
     /**
@@ -62,6 +84,8 @@ class BarangJenisController extends Controller
             )
         );
         return redirect()->route('barangJenis.index')->with('status','Success!!');
+
+        
     }
 
     /**
@@ -70,12 +94,24 @@ class BarangJenisController extends Controller
      * @param  \App\Models\BarangJenis  $barangJenis
      * @return \Illuminate\Http\Response
      */
-    public function show(BarangJenis $barangJenis)
+    public function show(BarangJenis $barangJeni)
     {
         //
-        return view('barangJenis.detail',[
-            'barangJenis' => $barangJenis,
+        return view('barangJenis.show',[
+            'barangJenis' => $barangJeni,
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('barangJenis.show', $user->id, $user->idRole);
+        
+        if($check){
+            return view('barangJenis.show',[
+                'barangJenis' => $barangJeni,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Barang Jenis Master');
+        }
     }
 
     /**
@@ -84,12 +120,24 @@ class BarangJenisController extends Controller
      * @param  \App\Models\BarangJenis  $barangJenis
      * @return \Illuminate\Http\Response
      */
-    public function edit(BarangJenis $barangJenis)
+    public function edit(BarangJenis $barangJeni)
     {
         //
         return view('barangJenis.edit',[
-            'barangJenis' => $barangJenis,
+            'barangJenis' => $barangJeni,
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('barangJenis.edit', $user->id, $user->idRole);
+        
+        if($check){
+            return view('barangJenis.edit',[
+                'barangJenis' => $barangJeni,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Barang Jenis Master');
+        }
     }
 
     /**
@@ -99,14 +147,14 @@ class BarangJenisController extends Controller
      * @param  \App\Models\BarangJenis  $barangJenis
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BarangJenis $barangJenis)
+    public function update(Request $request, BarangJenis $barangJeni)
     {
         //
         $data = $request->collect();
         $user = Auth::user();
         
         DB::table('barangJenis')
-            ->where('idBarangJenis', $barangJenis['idBarangJenis'])
+            ->where('idBarangJenis', $barangJeni['idBarangJenis'])
             ->update(array(
                 'nama' => $data['nama'],
                 'kode' => $data['kode'],
@@ -122,12 +170,12 @@ class BarangJenisController extends Controller
      * @param  \App\Models\BarangJenis  $barangJenis
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BarangJenis $barangJenis)
+    public function destroy(BarangJenis $barangJeni)
     {
         //
         $user = Auth::user();
         DB::table('barangJenis')
-            ->where('idBarangJenis', $barangJenis['idBarangJenis'])
+            ->where('idBarangJenis', $barangJeni['idBarangJenis'])
             ->update(array(
                 'hapus' => 1,
             )

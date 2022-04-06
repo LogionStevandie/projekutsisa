@@ -11,12 +11,12 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>Components</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-menu-button-wide"></i><span>Nota</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="{{asset('NiceAdmin/components-alerts.html')}}">
-              <i class="bi bi-circle"></i><span>Alerts</span>
+           <li>
+            <a href="{{route('notaPengiriman.index')}}">
+              <i class="bi bi-circle"></i><span>Tambah Nota</span>
             </a>
           </li>
         </ul>
@@ -44,7 +44,36 @@
           </li>
            <li>
             <a href="{{route('pembayaranJenis.index')}}">
-              <i class="bi bi-circle"></i><span>Pembayaran Jenis</span>
+              <i class="bi bi-circle"></i><span>Jenis Pembayaran</span>
+            </a>
+          </li>
+
+           <li>
+            <a href="{{route('barangJenis.index')}}">
+              <i class="bi bi-circle"></i><span>Jenis barang</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="{{route('role.index')}}">
+              <i class="bi bi-circle"></i><span>Role</span>
+            </a>
+          </li>
+
+           <li>
+            <a href="{{route('menu.index')}}">
+              <i class="bi bi-circle"></i><span>Menu</span>
+            </a>
+          </li>
+
+           <li>
+            <a href="{{route('pengirimanJenis.index')}}">
+              <i class="bi bi-circle"></i><span>Jenis Pengiriman</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{route('hargaPengiriman.index')}}">
+              <i class="bi bi-circle"></i><span>harga Pengiriman</span>
             </a>
           </li>
     
@@ -53,30 +82,19 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-layout-text-window-reverse"></i><span>Kurir</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="{{asset('NiceAdmin/tables-general.html')}}">
-              <i class="bi bi-circle"></i><span>General Tables</span>
+            <a href="{{route('notaPengiriman.index')}}">
+              <i class="bi bi-circle"></i><span>List kurir</span>
             </a>
           </li>
       
         </ul>
       </li><!-- End Tables Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="{{asset('NiceAdmin/charts-chartjs.html')}}">
-              <i class="bi bi-circle"></i><span>Chart.js</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Charts Nav -->
+    
 
 
 

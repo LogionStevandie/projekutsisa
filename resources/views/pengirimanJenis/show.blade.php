@@ -29,23 +29,22 @@
                         <div class="form-group">
                            <label for="title">Nama Pengiriman Jenis</label>
                            <input require type="text" name="nama" class="form-control" 
-                           value="{{old('nama',$pengirimanJenis->nama)}}" >
+                           value="{{old('nama',$pengirimanJenis->nama)}}" disabled>
                         </div>
 
                         <div class="form-group">
-                           <label for="title">Nama Pengiriman Jenis</label>
-                           <input require type="text" name="keterangan" class="form-control" 
-                           value="{{old('keterangan',$pengirimanJenis->keterangan)}}" >
+                            <label for="title">kode</label>
+                           <input require type="text" name="kode" class="form-control" 
+                           value="{{old('kode',$pengirimanJenis->kode)}}" disabled>
                         </div>
+                        <br>
 
                         <div class="form-group">
                             <label for="title">keterangan</label>
                            <input require type="text" name="keterangan" class="form-control" 
-                           value="{{old('keterangan',$pengirimanJenis->keterangan)}}" >
+                           value="{{old('keterangan',$pengirimanJenis->keterangan)}}" disabled >
                         </div>
                         <br>
-
-                       <button class="btn btn-primary">Tambah</button>
                     </form>
 
           

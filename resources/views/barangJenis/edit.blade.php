@@ -7,8 +7,8 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">barangJenis</li>
-          <li class="breadcrumb-item active">Index</li>
+          <li class="breadcrumb-item">barang Jenis</li>
+          <li class="breadcrumb-item active">Edit</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -19,10 +19,10 @@
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">barangJenis</h5>
+              <h5 class="card-title">barang Jenis</h5>
               <!--<p>Add lightweight datatables to your project with using the <a href="https://github.com/fiduswriter/Simple-DataTables" target="_blank">Simple DataTables</a> library. Just add <code>.datatable</code> class name to any table you wish to conver to a datatable</p>-->
               
-                    <form action="{{route('barangJenis.update',[$barangJenis->idbarangJenis])}}" method="POST" >
+                    <form action="{{route('barangJenis.update',[$barangJenis->idBarangJenis])}}" method="POST" >
                        @csrf
                        @method('PUT')
 

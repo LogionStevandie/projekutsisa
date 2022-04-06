@@ -3,12 +3,12 @@
 @section('content')
 
 <div class="pagetitle">
-      <h1>Data PengirimanJenis</h1>
+      <h1>Tambah Pengiriman Jenis</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">PengirimanJenis</li>
-          <li class="breadcrumb-item active">Index</li>
+          <li class="breadcrumb-item">Pengiriman Jenis</li>
+          <li class="breadcrumb-item active">Tambah</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -19,10 +19,10 @@
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">PengirimanJenis</h5>
+              <h5 class="card-title">Pengiriman Jenis</h5>
               <!--<p>Add lightweight datatables to your project with using the <a href="https://github.com/fiduswriter/Simple-DataTables" target="_blank">Simple DataTables</a> library. Just add <code>.datatable</code> class name to any table you wish to conver to a datatable</p>-->
               
-                    <form action="{{route('PengirimanJenis.store')}}" method="POST" >
+                    <form action="{{route('pengirimanJenis.store')}}" method="POST" >
                       @csrf
 
                         <div class="form-group">

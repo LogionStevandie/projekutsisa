@@ -18,11 +18,22 @@ class NotaPengirimanController extends Controller
     {
         //
         $data = DB::table('notaPengiriman')
+            ->select('notaPengiriman.*','users.name as pelanggan')
+            ->join('users','notaPengiriman.idPelanggan','=','users.id')
             ->where('hapus',0)
+            ->get();
+
+        $dataHargaPengiriman = DB::table('hargaPengiriman')
+            ->where('hapus', 0)
+            ->get();
+        $dataKota = DB::table('kota')
+            ->where('hapus', 0)
             ->get();
 
         return view('notaPengiriman.index',[
             'data' => $data,
+            'dataHargaPengiriman' => $dataHargaPengiriman,
+            'dataKota' => $dataKota,
         ]);
         
     }
@@ -54,6 +65,9 @@ class NotaPengirimanController extends Controller
         $dataHargaPengiriman = DB::table('HargaPengiriman')
             ->where('hapus',0)
             ->get();
+
+        $dataUser = DB::table('users')
+            ->get();
         
         return view('notaPengiriman.tambah',[
             'dataPengirimanJenis' => $dataPengirimanJenis,
@@ -61,6 +75,7 @@ class NotaPengirimanController extends Controller
             'dataHargaPengiriman' => $dataHargaPengiriman,
             'dataKota' => $dataKota,
             'dataBarang' => $dataBarang,
+            'dataUser' => $dataUser,
         ]);
     }
 
@@ -77,7 +92,7 @@ class NotaPengirimanController extends Controller
         $user = Auth::user();
         $year = date("Y");
         $month = date("m");
-
+        //dd($data);
         $kodePengiriman = DB::table('pengirimanJenis')
             ->where('idPengirimanJenis',$data['idPengirimanJenis'])
             ->get();
@@ -85,28 +100,45 @@ class NotaPengirimanController extends Controller
         $dataNota = DB::table('notaPengiriman')
             ->where('nama', 'like', $kodePengiriman[0]->kode.'/'.$year.'/'.$month."/%")
             ->get();
-        $dataHarga = DB::table('hargaPengiriman')
+
+
+        /*$dataHarga = DB::table('hargaPengiriman')
             ->where('idHargaPengiriman', $data['idHargaPengiriman'])
             ->get();
-        
+        */
         $totalIndex = str_pad(strval(count($dataNota) + 1),4,'0',STR_PAD_LEFT);
 
-        $idnota = DB::table('notaPengiriman')->insertGetId(array(
-            'nama' => $kodePengiriman[0]->kode.'/'.$year.'/'.$month."/".$totalIndex,
-            'keterangan' => $data['keterangan'],//dienkripsi
+        $namaNota = $kodePengiriman[0]->kode.'/'.$year.'/'.$month."/".$totalIndex;
+
+        $enkripNamaNota = $this->enkripData($namaNota, true);
+
+        $idHargaPengiriman = DB::table('hargaPengiriman')
+            ->where('idKotaAwal', $data['idKotaAwal'])
+            ->where('idKotaTujuan', $data['idKotaTujuan'])
+            ->where('idPengirimanJenis', $data['idPengirimanJenis'])
+            ->get();
+        //dd($data['hargaTotal'] * $data['berat']);
+        DB::table('notaPengiriman')->insert(array(
+            'nama' => $namaNota,
+            'namaEnkripsi' => $enkripNamaNota,//dienkripsi
+            'keterangan' => $data['keterangan'],
             'idPengirimanJenis' => $data['idPengirimanJenis'],
             'idPembayaranJenis' => $data['idPembayaranJenis'],
-            'idHargaPengiriman' => $data['idHargaPengiriman'],
-            'idPelanggan' => $data['idPelanggan'],//belumada
-            'tanggalDibuat' => date("Y-m-d h:i:sa"),//belumada
-            'proses' => 0,
+            'idHargaPengiriman' => $idHargaPengiriman[0]->idHargaPengiriman,
+            'totalBerat' =>  $data['berat'],
+            'totalHarga' =>  $data['hargaTotal'] * $data['berat'],
+            //'idKurir' =>  $data['idKurir'],
+            'prosesPengiriman' => 0,
+            'prosesKurir' => 0,
+            'idBarangJenis' => $data['idBarangJenis'],//
+            'idPelanggan' => $data['idPelanggan'],//
+            'tanggalDibuat' => date("Y-m-d h:i:s"),//
+            'alamat' => $data['alamat'],        
             )
         ); 
 
-        $totalHarga = 0;
-        $totalBerat = 0;
 
-        for($i = 0; $i < count($data['idBarangJenis']); $i++){
+        /*for($i = 0; $i < count($data['idBarangJenis']); $i++){
             DB::table('notaPengirimanDetail')->insert(array(
                 'idNotaPengiriman' => $idnota,
                 'idBarangJenis' => $data['idBarangJenis'][$i], //array
@@ -116,15 +148,9 @@ class NotaPengirimanController extends Controller
             $totalBerat += $data['beratBarang'][$i];
             $totalHarga += $data['beratBarang'][$i] * $dataHarga->harga;         
         }
+        */
 
-        DB::table('notaPengiriman')
-            ->where('id', $idnota)
-            ->update([
-                'totalBerat' =>  $totalBerat,
-                'totalHarga' =>  $totalHarga,
-        ]);
-
-        return redirect()->route('purchaseRequest.index')->with('status','Success!!');
+        return redirect()->route('notaPengiriman.index')->with('status','Success!!');
     }
 
     /**
@@ -154,6 +180,7 @@ class NotaPengirimanController extends Controller
     public function edit(NotaPengiriman $notaPengiriman)
     {
         //
+        
         $dataPengirimanJenis = DB::table('pengirimanJenis')
             ->where('hapus', 0)
             ->get();
@@ -176,16 +203,24 @@ class NotaPengirimanController extends Controller
 
         $dataDetail = DB::table('notaPengirimanDetail')
             ->get();
+         $dataUser = DB::table('users')
+            ->get();
         
-        return view('notaPengiriman.tambah',[
-            'dataPengirimanJenis' => $dataPengirimanJenis,
-            'dataPembayaranJenis' => $dataPembayaranJenis,
-            'dataHargaPengiriman' => $dataHargaPengiriman,
-            'dataKota' => $dataKota,
-            'dataBarang' => $dataBarang,
-            'notaPengiriman' => $notaPengiriman,
-            'dataDetail' => $dataDetail,
-        ]);
+        if($notaPengiriman->proses == 0){
+            return view('notaPengiriman.edit',[
+                'dataPengirimanJenis' => $dataPengirimanJenis,
+                'dataPembayaranJenis' => $dataPembayaranJenis,
+                'dataHargaPengiriman' => $dataHargaPengiriman,
+                'dataKota' => $dataKota,
+                'dataBarang' => $dataBarang,
+                'notaPengiriman' => $notaPengiriman,
+                'dataDetail' => $dataDetail,
+                'dataUser' => $dataUser,
+            ]);
+        }else{
+            return redirect()->route('notaPengiriman.index')->with('status','File tidak dapat diedit');         
+        }
+        
     }
 
     /**
@@ -198,6 +233,91 @@ class NotaPengirimanController extends Controller
     public function update(Request $request, NotaPengiriman $notaPengiriman)
     {
         //
+        //
+        $data = $request->collect();
+        $user = Auth::user();
+        $year = date("Y");
+        $month = date("m");
+
+        $idHargaPengiriman = DB::table('hargaPengiriman')
+            ->where('idKotaAwal', $data['idKotaAwal'])
+            ->where('idKotaTujuan', $data['idKotaTujuan'])
+            ->where('idPengirimanJenis', $data['idPengirimanJenis'])
+            ->get();
+
+        DB::table('notaPengiriman')
+            ->where('idNotaPengiriman',$notaPengiriman->idNotaPengiriman)
+            ->update([
+                'keterangan' => $data['keterangan'],
+                'idPengirimanJenis' => $data['idPengirimanJenis'],
+                'idPembayaranJenis' => $data['idPembayaranJenis'],
+                'idHargaPengiriman' => $idHargaPengiriman[0]->idHargaPengiriman,
+                'totalBerat' =>  $data['berat'],
+                'totalHarga' =>  $data['hargaTotal'] * $data['berat'],
+                //'idKurir' =>  $data['idKurir'],
+                'idBarangJenis' => $data['idBarangJenis'],//
+                'idPelanggan' => $data['idPelanggan'],//
+                'alamat' => $data['alamat'],
+            ]
+        ); 
+
+        /*$totalHarga = 0;
+        $totalBerat = 0;
+
+        $dataDetailTotal = DB::table('notaPengirimanDetail')
+            ->where('idNotaPengiriman', $notaPengiriman->idNotaPengiriman)
+            ->get();
+
+        if(count($dataDetailTotal) > count($data['idBarangJenis'])){
+            DB::table('notaPengirimanDetail')
+                ->where('idNotaPengiriman', $notaPengiriman->idNotaPengiriman)
+                ->delete();
+            
+            for($i = 0; $i < count($data['idBarangJenis']); $i++){
+                DB::table('notaPengirimanDetail')->insert(array(
+                    'idNotaPengiriman' => $idnota,
+                    'idBarangJenis' => $data['idBarangJenis'][$i], //array
+                    'berat' => $data['beratBarang'][$i],
+                    )
+                ); 
+                $totalBerat += $data['beratBarang'][$i];
+                $totalHarga += $data['beratBarang'][$i] * $dataHarga->harga;         
+            }    
+        }
+        else{
+            for($i = 0; $i < count($data['idBarangJenis']); $i++){
+                if($i < count($dataDetailTotal)){
+                    DB::table('notaPengirimanDetail')
+                    ->where('idNotaPengiriman', $notaPengiriman->idNotaPengiriman)
+                    ->update(array(
+                        'idBarangJenis' => $data['idBarangJenis'][$i], //array
+                        'berat' => $data['beratBarang'][$i],
+                        )           
+                    );
+                    $totalBerat += $data['beratBarang'][$i];
+                    $totalHarga += $data['beratBarang'][$i] * $dataHarga->harga;           
+                }
+                else{
+                    DB::table('notaPengirimanDetail')->insert(array(
+                        'idNotaPengiriman' => $idnota,
+                        'idBarangJenis' => $data['idBarangJenis'][$i], //array
+                        'berat' => $data['beratBarang'][$i],
+                        )
+                    ); 
+                    $totalBerat += $data['beratBarang'][$i];
+                    $totalHarga += $data['beratBarang'][$i] * $dataHarga->harga;        
+                }
+            }
+        }
+
+        DB::table('notaPengiriman')
+            ->where('id', $idnota)
+            ->update([
+                'totalBerat' =>  $totalBerat,
+                'totalHarga' =>  $totalHarga,
+        ]);*/
+
+        return redirect()->route('notaPengiriman.index')->with('status','Success!!');
     }
 
     /**

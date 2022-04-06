@@ -71,7 +71,7 @@ class RoleController extends Controller
     public function show(Role $role)
     {
         //
-        return view('role.detail', [
+        return view('role.show', [
             'role' => $role
         ]);
     }

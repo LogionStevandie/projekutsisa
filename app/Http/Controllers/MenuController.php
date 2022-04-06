@@ -36,7 +36,7 @@ class MenuController extends Controller
      */
     public function create()
     {
-        return view('menu.index');
+        return view('menu.tambah');
     }
 
     /**
@@ -68,7 +68,7 @@ class MenuController extends Controller
      */
     public function show(Menu $menu)
     {
-        return view('menu.detail',[
+        return view('menu.show',[
             'menu' => $menu,
         ]);
     }

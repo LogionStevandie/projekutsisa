@@ -20,11 +20,18 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 Route::resource('menu', 'App\Http\Controllers\MenuController');
 
 Route::resource('provinsi', 'App\Http\Controllers\ProvinsiController');//slese
 Route::resource('kota', 'App\Http\Controllers\KotaController');//slese
 Route::resource('pulau', 'App\Http\Controllers\PulauController');//slese
 Route::resource('pembayaranJenis', 'App\Http\Controllers\PembayaranJenisController');//slese
-Route::resource('barangJenis', 'App\Http\Controllers\BarangJenisController');
+Route::resource('barangJenis', 'App\Http\Controllers\BarangJenisController');//selse
+
+Route::resource('role', 'App\Http\Controllers\RoleController');//selese
+Route::resource('menu', 'App\Http\Controllers\MenuController');//selese
+Route::resource('pengirimanJenis', 'App\Http\Controllers\PengirimanJenisController');
+
+Route::resource('hargaPengiriman', 'App\Http\Controllers\HargaPengirimanController');
+Route::resource('notaPengiriman', 'App\Http\Controllers\NotaPengirimanController');
+

@@ -18,8 +18,6 @@ class PengirimanJenisController extends Controller
     {
         //
         $data = DB::table('PengirimanJenis')->where('hapus',0)->get();
-        
-
         return view('PengirimanJenis.index',[
             'data' => $data,
         ]);
@@ -50,6 +48,7 @@ class PengirimanJenisController extends Controller
         DB::table('PengirimanJenis')
             ->insert(array(
                 'nama' => $data['nama'],
+                'kode'=>$data['kode'],
                 'keterangan' => $data['keterangan'],
             )
         );
@@ -62,11 +61,11 @@ class PengirimanJenisController extends Controller
      * @param  \App\Models\PengirimanJenis  $pengirimanJenis
      * @return \Illuminate\Http\Response
      */
-    public function show(PengirimanJenis $pengirimanJenis)
+    public function show(PengirimanJenis $pengirimanJeni)
     {
         //
-        return view('pengirimanJenis.detail',[
-            'pengirimanJenis' => $pengirimanJenis,
+        return view('pengirimanJenis.show',[
+            'pengirimanJenis' => $pengirimanJeni,
         ]);
     }
 
@@ -76,11 +75,11 @@ class PengirimanJenisController extends Controller
      * @param  \App\Models\PengirimanJenis  $pengirimanJenis
      * @return \Illuminate\Http\Response
      */
-    public function edit(PengirimanJenis $pengirimanJenis)
+    public function edit(PengirimanJenis $pengirimanJeni)
     {
         //
         return view('pengirimanJenis.edit',[
-            'pengirimanJenis' => $pengirimanJenis,
+            'pengirimanJenis' => $pengirimanJeni,
         ]);
     }
 
@@ -91,16 +90,17 @@ class PengirimanJenisController extends Controller
      * @param  \App\Models\PengirimanJenis  $pengirimanJenis
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PengirimanJenis $pengirimanJenis)
+    public function update(Request $request, PengirimanJenis $pengirimanJeni)
     {
         //
         $data = $request->collect();
         $user = Auth::user();
         
         DB::table('PengirimanJenis')
-            ->where('idPengirimanJenis', $pengirimanJenis['idPengirimanJenis'])
+            ->where('idPengirimanJenis', $pengirimanJeni['idPengirimanJenis'])
             ->update(array(
                 'nama' => $data['nama'],
+                'kode'=>$data['kode'],
                 'keterangan' => $data['keterangan'],
             )
         );
@@ -113,11 +113,11 @@ class PengirimanJenisController extends Controller
      * @param  \App\Models\PengirimanJenis  $pengirimanJenis
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PengirimanJenis $pengirimanJenis)
+    public function destroy(PengirimanJenis $pengirimanJeni)
     {
         //
         DB::table('PengirimanJenis')
-        ->where('idPengirimanJenis', $pengirimanJenis['idPengirimanJenis'])
+        ->where('idPengirimanJenis', $pengirimanJeni['idPengirimanJenis'])
         ->update(array(
             'hapus' => 1,
         )
