@@ -21,13 +21,10 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-
 Route::resource('menu', 'App\Http\Controllers\MenuController');
 
-
-Route::resource('provinsi', 'App\Http\Controllers\ProvinsiController');
-Route::resource('kota', 'App\Http\Controllers\KotaController');
-Route::resource('pulau', 'App\Http\Controllers\PulauController');
-
-Route::resource('pembayaranJenis', 'App\Http\Controllers\PembayaranJenisController');
+Route::resource('provinsi', 'App\Http\Controllers\ProvinsiController');//slese
+Route::resource('kota', 'App\Http\Controllers\KotaController');//slese
+Route::resource('pulau', 'App\Http\Controllers\PulauController');//slese
+Route::resource('pembayaranJenis', 'App\Http\Controllers\PembayaranJenisController');//slese
 Route::resource('barangJenis', 'App\Http\Controllers\BarangJenisController');
