@@ -27,9 +27,21 @@ class KotaController extends Controller
         ->where('kota.hapus',"=",0)
         ->get();
         
-    return view('kota.index',[
-        'data' => $data,
-    ]);
+        return view('kota.index',[
+            'data' => $data,
+        ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('kota.index', $user->id, $user->idRole);
+        
+        if($check){
+            return view('kota.index',[
+                'data' => $data,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Kota Master');
+        }
     }
 
     /**
@@ -45,6 +57,18 @@ class KotaController extends Controller
         return view('kota.tambah',[
             'dataProvinsi' => $dataProvinsi,
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('kota.create', $user->id, $user->idRole);
+        
+        if($check){
+            return view('kota.tambah',[
+                'dataProvinsi' => $dataProvinsi,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Kota Master');
+        }
     }
 
     /**
@@ -83,6 +107,19 @@ class KotaController extends Controller
             'dataProvinsi' => $dataProvinsi,
             'kota' => $kotum,
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('kota.show', $user->id, $user->idRole);
+        
+        if($check){
+            return view('kota.show',[
+                'dataProvinsi' => $dataProvinsi,
+                'kota' => $kotum,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Kota Master');
+        }
     }
 
     /**
@@ -100,6 +137,19 @@ class KotaController extends Controller
             'dataProvinsi' => $dataProvinsi,
             'kota' => $kotum,
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('kota.edit', $user->id, $user->idRole);
+        
+        if($check){
+            return view('kota.edit',[
+                'dataProvinsi' => $dataProvinsi,
+                'kota' => $kotum,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Kota Master');
+        }
     }
 
     /**

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\NotaPengiriman;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class KurirController extends Controller
 {
@@ -14,6 +17,39 @@ class KurirController extends Controller
     public function index()
     {
         //
+        $data = DB::table('notaPengiriman')
+            ->select('notaPengiriman.*','users.name as pelanggan')
+            ->join('users','notaPengiriman.idPelanggan','=','users.id')
+            ->where('hapus',0)
+            ->where('prosesPengiriman',2)
+            ->get();
+
+        $dataHargaPengiriman = DB::table('hargaPengiriman')
+            ->where('hapus', 0)
+            ->get();
+        $dataKota = DB::table('kota')
+            ->where('hapus', 0)
+            ->get();
+
+        return view('kurir.index',[
+            'data' => $data,
+            'dataHargaPengiriman' => $dataHargaPengiriman,
+            'dataKota' => $dataKota,
+        ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('kurir.index', $user->id, $user->idRole);
+        
+        if($check){
+            return view('kurir.index',[
+                'data' => $data,
+                'dataHargaPengiriman' => $dataHargaPengiriman,
+                'dataKota' => $dataKota,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Kurir');
+        }
     }
 
     /**
@@ -54,9 +90,71 @@ class KurirController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(NotaPengiriman $notaPengiriman)
     {
         //
+        $dataPengirimanJenis = DB::table('pengirimanJenis')
+            ->where('hapus', 0)
+            ->get();
+
+        $dataPembayaranJenis = DB::table('pembayaranJenis')
+            ->where('hapus', 0)
+            ->get();
+
+        $dataKota = DB::table('kota')
+            ->where('hapus', 0)
+            ->get();
+        
+        $dataBarang = DB::table('barangJenis')
+            ->where('hapus',0)
+            ->get();
+        
+        $dataHargaPengiriman = DB::table('HargaPengiriman')
+            ->where('hapus',0)
+            ->get();
+
+        $dataDetail = DB::table('notaPengirimanDetail')
+            ->get();
+         $dataUser = DB::table('users')
+            ->get();
+        
+        if($notaPengiriman->prosesPengiriman == 2 && ($notaPengiriman->prosesKurir == 0 || $notaPengiriman->prosesKurir == 1)){
+            return view('kurir.edit',[
+                'dataPengirimanJenis' => $dataPengirimanJenis,
+                'dataPembayaranJenis' => $dataPembayaranJenis,
+                'dataHargaPengiriman' => $dataHargaPengiriman,
+                'dataKota' => $dataKota,
+                'dataBarang' => $dataBarang,
+                'notaPengiriman' => $notaPengiriman,
+                'dataDetail' => $dataDetail,
+                'dataUser' => $dataUser,
+            ]);
+        }else{
+            return redirect()->route('kurir.index')->with('status','File tidak dapat diedit');         
+        }
+
+        $user = Auth::user();
+        $check = $this->checkAccess('kurir.edit', $user->id, $user->idRole);
+        
+        if($check){
+            if($notaPengiriman->prosesPengiriman == 2 && ($notaPengiriman->prosesKurir == 0 || $notaPengiriman->prosesKurir == 1)){
+                return view('kurir.edit',[
+                    'dataPengirimanJenis' => $dataPengirimanJenis,
+                    'dataPembayaranJenis' => $dataPembayaranJenis,
+                    'dataHargaPengiriman' => $dataHargaPengiriman,
+                    'dataKota' => $dataKota,
+                    'dataBarang' => $dataBarang,
+                    'notaPengiriman' => $notaPengiriman,
+                    'dataDetail' => $dataDetail,
+                    'dataUser' => $dataUser,
+                ]);
+            }else{
+                return redirect()->route('kurir.index')->with('status','File tidak dapat diedit');         
+            }
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Kurir');
+        }
     }
 
     /**
@@ -66,9 +164,30 @@ class KurirController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, NotaPengiriman $notaPengiriman)
     {
         //
+        $user = Auth::user();
+        if($notaPengiriman->prosesPengiriman == "2" && $notaPengiriman->prosesKurir == "0"){
+            //barang baru dikirim
+            DB::table('notaPengiriman')
+                ->where('idNotaPengiriman', $notaPengiriman['idNotaPengiriman'])
+                ->update(array(
+                    'prosesKurir' => $user->id,
+                    'prosesKurir' => 1,
+                )
+            );
+        }
+        elseif($notaPengiriman->prosesPengiriman == "2" && $notaPengiriman->prosesKurir == "1"){
+            //barang sudah sampai gudang pengiriman
+            DB::table('notaPengiriman')
+                ->where('idNotaPengiriman', $notaPengiriman['idNotaPengiriman'])
+                ->update(array(
+                    'prosesKurir' => 2,
+                )
+            );
+        }
+        return redirect()->route('kurir.index')->with('status','Success!!');
     }
 
     /**

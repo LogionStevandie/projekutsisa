@@ -21,6 +21,18 @@ class PengirimanJenisController extends Controller
         return view('PengirimanJenis.index',[
             'data' => $data,
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('PengirimanJenis.index', $user->id, $user->idRole);
+        
+        if($check){
+            return view('PengirimanJenis.index',[
+                'data' => $data,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Pengiriman Jenis');
+        }
     }
 
     /**
@@ -32,6 +44,16 @@ class PengirimanJenisController extends Controller
     {
         //
         return view('pengirimanJenis.tambah');
+
+        $user = Auth::user();
+        $check = $this->checkAccess('PengirimanJenis.create', $user->id, $user->idRole);
+        
+        if($check){
+            return view('pengirimanJenis.tambah');
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Pengiriman Jenis');
+        }
     }
 
     /**
@@ -67,6 +89,18 @@ class PengirimanJenisController extends Controller
         return view('pengirimanJenis.show',[
             'pengirimanJenis' => $pengirimanJeni,
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('PengirimanJenis.show', $user->id, $user->idRole);
+        
+        if($check){
+            return view('pengirimanJenis.show',[
+                'pengirimanJenis' => $pengirimanJeni,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Pengiriman Jenis');
+        }
     }
 
     /**
@@ -81,6 +115,18 @@ class PengirimanJenisController extends Controller
         return view('pengirimanJenis.edit',[
             'pengirimanJenis' => $pengirimanJeni,
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('PengirimanJenis.edit', $user->id, $user->idRole);
+        
+        if($check){
+            return view('pengirimanJenis.edit',[
+                'pengirimanJenis' => $pengirimanJeni,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Pengiriman Jenis');
+        }
     }
 
     /**

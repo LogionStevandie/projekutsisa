@@ -27,11 +27,16 @@ Route::resource('kota', 'App\Http\Controllers\KotaController');//slese
 Route::resource('pulau', 'App\Http\Controllers\PulauController');//slese
 Route::resource('pembayaranJenis', 'App\Http\Controllers\PembayaranJenisController');//slese
 Route::resource('barangJenis', 'App\Http\Controllers\BarangJenisController');//selse
-
 Route::resource('role', 'App\Http\Controllers\RoleController');//selese
+
+
 Route::resource('menu', 'App\Http\Controllers\MenuController');//selese
 Route::resource('pengirimanJenis', 'App\Http\Controllers\PengirimanJenisController');
-
 Route::resource('hargaPengiriman', 'App\Http\Controllers\HargaPengirimanController');
 Route::resource('notaPengiriman', 'App\Http\Controllers\NotaPengirimanController');
+Route::get('/print/invoice/{notaPengiriman}',[App\Http\Controllers\NotaPengirimanController::class, 'print']); //cobak gini ta
 
+Route::resource('tracking', 'App\Http\Controllers\TrackingController');
+//Route::get('/tracking/{dataEnkrip}',[App\Http\Controllers\TrackingController::class, 'show']);
+Route::resource('approvePengiriman', 'App\Http\Controllers\ApprovePengirimanController');//belom
+Route::resource('kurir', 'App\Http\Controllers\KurirController');//belom 

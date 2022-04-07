@@ -23,6 +23,18 @@ class PembayaranJenisController extends Controller
         return view('pembayaranJenis.index',[
             'data' => $data,
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('pembayaranJenis.index', $user->id, $user->idRole);
+        
+        if($check){
+            return view('pembayaranJenis.index',[
+                'data' => $data,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Pembayaran Jenis');
+        }
     }
 
     /**
@@ -34,6 +46,16 @@ class PembayaranJenisController extends Controller
     {
         //
         return view('pembayaranJenis.tambah');
+
+        $user = Auth::user();
+        $check = $this->checkAccess('pembayaranJenis.create', $user->id, $user->idRole);
+        
+        if($check){
+            return view('pembayaranJenis.tambah');
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Pembayaran Jenis');
+        }
     }
 
     /**
@@ -69,6 +91,18 @@ class PembayaranJenisController extends Controller
         return view('pembayaranJenis.show',[
             'pembayaranJenis' => $pembayaranJeni,
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('pembayaranJenis.show', $user->id, $user->idRole);
+        
+        if($check){
+            return view('pembayaranJenis.show',[
+                'pembayaranJenis' => $pembayaranJeni,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Pembayaran Jenis');
+        }
     }
 
     /**
@@ -83,6 +117,18 @@ class PembayaranJenisController extends Controller
         return view('pembayaranJenis.edit',[
             'pembayaranJenis' => $pembayaranJeni,
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('pembayaranJenis.edit', $user->id, $user->idRole);
+        
+        if($check){
+            return view('pembayaranJenis.edit',[
+                'pembayaranJenis' => $pembayaranJeni,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Pembayaran Jenis');
+        }
     }
 
     /**

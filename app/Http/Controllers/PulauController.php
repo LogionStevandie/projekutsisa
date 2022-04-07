@@ -27,6 +27,18 @@ class PulauController extends Controller
         return view('pulau.index',[
             'data' => $data,
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('pulau.index', $user->id, $user->idRole);
+        
+        if($check){
+            return view('pulau.index',[
+                'data' => $data,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Pulau Master');
+        }
         
     }
 
@@ -39,6 +51,16 @@ class PulauController extends Controller
     {
         //
         return view('pulau.tambah');
+
+        $user = Auth::user();
+        $check = $this->checkAccess('pulau.create', $user->id, $user->idRole);
+        
+        if($check){
+            return view('pulau.tambah');
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Pulau Master');
+        }
     }
 
     /**
@@ -74,6 +96,18 @@ class PulauController extends Controller
         return view('pulau.show',[
             'pulau' => $pulau,
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('pulau.show', $user->id, $user->idRole);
+        
+        if($check){
+            return view('pulau.show',[
+                'pulau' => $pulau,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Pulau Master');
+        }
     }
 
     /**
@@ -88,6 +122,18 @@ class PulauController extends Controller
         return view('pulau.edit',[
             'pulau' => $pulau,
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('pulau.edit', $user->id, $user->idRole);
+        
+        if($check){
+            return view('pulau.edit',[
+                'pulau' => $pulau,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Pulau Master');
+        }
     }
 
     /**

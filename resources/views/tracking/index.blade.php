@@ -22,13 +22,12 @@
             <h5 class="card-title">Tracking Barang</h5>
             <!--<p>Add lightweight datatables to your project with using the <a href="https://github.com/fiduswriter/Simple-DataTables" target="_blank">Simple DataTables</a> library. Just add <code>.datatable</code> class name to any table you wish to conver to a datatable</p>-->
 
-            <form action="{{route('tracking.detail')}}" method="POST" >
+            <form action="/tracking/{namaEnkripsi}/" method="GET" >
                       @csrf
-
                         <div class="form-group">
                            <label for="title">Tracking</label>
-                           <input require type="text" name="tracking" class="form-control" 
-                           value="{{old('tracking','')}}" >
+                           <input require type="text" name="namaEnkripsi" class="form-control" 
+                           value="{{old('namaEnkripsi')}}" >
                         </div>
                         <br>
                        <button class="btn btn-primary">check</button>

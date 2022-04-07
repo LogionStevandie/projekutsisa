@@ -35,6 +35,20 @@ class NotaPengirimanController extends Controller
             'dataHargaPengiriman' => $dataHargaPengiriman,
             'dataKota' => $dataKota,
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('notaPengiriman.index', $user->id, $user->idRole);
+        
+        if($check){
+            return view('notaPengiriman.index',[
+                'data' => $data,
+                'dataHargaPengiriman' => $dataHargaPengiriman,
+                'dataKota' => $dataKota,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Nota Pengiriman');
+        }
         
     }
 
@@ -77,6 +91,23 @@ class NotaPengirimanController extends Controller
             'dataBarang' => $dataBarang,
             'dataUser' => $dataUser,
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('notaPengiriman.create', $user->id, $user->idRole);
+        
+        if($check){
+            return view('notaPengiriman.tambah',[
+                'dataPengirimanJenis' => $dataPengirimanJenis,
+                'dataPembayaranJenis' => $dataPembayaranJenis,
+                'dataHargaPengiriman' => $dataHargaPengiriman,
+                'dataKota' => $dataKota,
+                'dataBarang' => $dataBarang,
+                'dataUser' => $dataUser,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Nota Pengiriman');
+        }
     }
 
     /**
@@ -162,13 +193,56 @@ class NotaPengirimanController extends Controller
     public function show(NotaPengiriman $notaPengiriman)
     {
         //
-        $data = DB::table('notaPengirimanDetail')
+        $dataPengirimanJenis = DB::table('pengirimanJenis')
+            ->where('hapus', 0)
             ->get();
 
-        return view('notaPengiriman.index',[
+        $dataPembayaranJenis = DB::table('pembayaranJenis')
+            ->where('hapus', 0)
+            ->get();
+
+        $dataKota = DB::table('kota')
+            ->where('hapus', 0)
+            ->get();
+        
+        $dataBarang = DB::table('barangJenis')
+            ->where('hapus',0)
+            ->get();
+        
+        $dataHargaPengiriman = DB::table('HargaPengiriman')
+            ->where('hapus',0)
+            ->get();
+
+        $dataUser = DB::table('users')
+            ->get();
+        //dd($notaPengiriman);
+        return view('notaPengiriman.show',[
             'notaPengiriman' => $notaPengiriman,
-            'data' => $data,
+            'dataPengirimanJenis' => $dataPengirimanJenis,
+            'dataPembayaranJenis' => $dataPembayaranJenis,
+            'dataKota' => $dataKota,
+            'dataBarang' => $dataBarang,
+            'dataHargaPengiriman' => $dataHargaPengiriman,
+            'dataUser' => $dataUser,
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('notaPengiriman.show', $user->id, $user->idRole);
+        
+        if($check){
+            return view('notaPengiriman.show',[
+                'notaPengiriman' => $notaPengiriman,
+                'dataPengirimanJenis' => $dataPengirimanJenis,
+                'dataPembayaranJenis' => $dataPembayaranJenis,
+                'dataKota' => $dataKota,
+                'dataBarang' => $dataBarang,
+                'dataHargaPengiriman' => $dataHargaPengiriman,
+                'dataUser' => $dataUser,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Nota Pengiriman');
+        }
     }
 
     /**
@@ -219,6 +293,29 @@ class NotaPengirimanController extends Controller
             ]);
         }else{
             return redirect()->route('notaPengiriman.index')->with('status','File tidak dapat diedit');         
+        }
+
+        $user = Auth::user();
+        $check = $this->checkAccess('notaPengiriman.edit', $user->id, $user->idRole);
+        
+        if($check){
+            if($notaPengiriman->proses == 0){
+                return view('notaPengiriman.edit',[
+                    'dataPengirimanJenis' => $dataPengirimanJenis,
+                    'dataPembayaranJenis' => $dataPembayaranJenis,
+                    'dataHargaPengiriman' => $dataHargaPengiriman,
+                    'dataKota' => $dataKota,
+                    'dataBarang' => $dataBarang,
+                    'notaPengiriman' => $notaPengiriman,
+                    'dataDetail' => $dataDetail,
+                    'dataUser' => $dataUser,
+                ]);
+            }else{
+                return redirect()->route('notaPengiriman.index')->with('status','File tidak dapat diedit');         
+            }
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Nota Pengiriman');
         }
         
     }
@@ -336,5 +433,61 @@ class NotaPengirimanController extends Controller
             )
         );
         return redirect()->route('notaPengiriman.index')->with('status','Success!!');
+    }
+
+
+    public function print(NotaPengiriman $notaPengiriman)
+    {
+        //
+        $dataPengirimanJenis = DB::table('pengirimanJenis')
+            ->where('hapus', 0)
+            ->get();
+
+        $dataPembayaranJenis = DB::table('pembayaranJenis')
+            ->where('hapus', 0)
+            ->get();
+
+        $dataKota = DB::table('kota')
+            ->where('hapus', 0)
+            ->get();
+        
+        $dataBarang = DB::table('barangJenis')
+            ->where('hapus',0)
+            ->get();
+        
+        $dataHargaPengiriman = DB::table('HargaPengiriman')
+            ->where('hapus',0)
+            ->get();
+
+        $dataUser = DB::table('users')
+            ->get();
+        //dd($notaPengiriman);
+        return view('notaPengiriman.print',[
+            'notaPengiriman' => $notaPengiriman,
+            'dataPengirimanJenis' => $dataPengirimanJenis,
+            'dataPembayaranJenis' => $dataPembayaranJenis,
+            'dataKota' => $dataKota,
+            'dataBarang' => $dataBarang,
+            'dataHargaPengiriman' => $dataHargaPengiriman,
+            'dataUser' => $dataUser,
+        ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('notaPengiriman.show', $user->id, $user->idRole);
+        
+        if($check){
+            return view('notaPengiriman.print',[
+                'notaPengiriman' => $notaPengiriman,
+                'dataPengirimanJenis' => $dataPengirimanJenis,
+                'dataPembayaranJenis' => $dataPembayaranJenis,
+                'dataKota' => $dataKota,
+                'dataBarang' => $dataBarang,
+                'dataHargaPengiriman' => $dataHargaPengiriman,
+                'dataUser' => $dataUser,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Nota Pengiriman');
+        }
     }
 }

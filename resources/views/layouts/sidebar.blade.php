@@ -3,7 +3,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="{{asset('NiceAdmin/index.html')}}">
+        <a class="nav-link " href="{{route('home')}}">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
@@ -85,14 +85,45 @@
           <i class="bi bi-layout-text-window-reverse"></i><span>Kurir</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
+         <li>
             <a href="{{route('notaPengiriman.index')}}">
-              <i class="bi bi-circle"></i><span>List kurir</span>
+              <i class="bi bi-circle"></i><span>List Barang untuk di Proses</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Tables Nav -->
+      
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-gem"></i><span>Tracking</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+           <li>
+            <a href="{{route('tracking.index')}}">
+              <i class="bi bi-circle"></i><span>Tracking barang</span>
             </a>
           </li>
       
         </ul>
-      </li><!-- End Tables Nav -->
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#proses-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-truck"></i><span>Proses Pengiriman</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="proses-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+           <li>
+            <a href="{{route('approvePengiriman.index')}}">
+              <i class="bi bi-circle"></i><span>Pengiriman Barang</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{route('kurir.index')}}">
+              <i class="bi bi-circle"></i><span>Kurir</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Icons Nav -->
 
     
 

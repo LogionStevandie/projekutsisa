@@ -27,6 +27,18 @@ class MenuController extends Controller
         return view('menu.index',[
             'data' => $data,
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('menu.index', $user->id, $user->idRole);
+        
+        if($check){
+            return view('menu.index',[
+                'data' => $data,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Menu Master');
+        }
     }
 
     /**
@@ -37,6 +49,16 @@ class MenuController extends Controller
     public function create()
     {
         return view('menu.tambah');
+
+        $user = Auth::user();
+        $check = $this->checkAccess('menu.create', $user->id, $user->idRole);
+        
+        if($check){
+            return view('menu.tambah');
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Menu Master');
+        }
     }
 
     /**
@@ -71,6 +93,18 @@ class MenuController extends Controller
         return view('menu.show',[
             'menu' => $menu,
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('menu.show', $user->id, $user->idRole);
+        
+        if($check){
+            return view('menu.show',[
+                'menu' => $menu,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Menu Master');
+        }
     }
 
     /**
@@ -84,6 +118,18 @@ class MenuController extends Controller
         return view('menu.edit',[
             'menu' => $menu,
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('menu.edit', $user->id, $user->idRole);
+        
+        if($check){
+            return view('menu.edit',[
+                'menu' => $menu,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Menu Master');
+        }
     }
 
     /**

@@ -98,6 +98,10 @@
                   </form>
                   @endif
                   <a href="{{route('notaPengiriman.show',[$data->idNotaPengiriman])}}" class="btn btn-primary btn-responsive">Detail</a>
+                  
+                  <form action="/print/invoice/{{$data->idNotaPengiriman}}/" method="get" class="btn btn-responsive">
+                    <button class="btn btn-secondary btn-danger">Print</button>
+                  </form>
                 </td>
 
               </tr>

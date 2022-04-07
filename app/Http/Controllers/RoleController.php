@@ -28,6 +28,18 @@ class RoleController extends Controller
         return view('role.index',[
             'data' => $data,
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('role.index', $user->id, $user->idRole);
+        
+        if($check){
+            return view('role.index',[
+                'data' => $data,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Role Master');
+        }
     }
 
     /**
@@ -39,6 +51,16 @@ class RoleController extends Controller
     {
         //
         return view('role.tambah');
+
+        $user = Auth::user();
+        $check = $this->checkAccess('role.create', $user->id, $user->idRole);
+        
+        if($check){
+            return view('role.tambah');
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Role Master');
+        }
     }
 
     /**
@@ -74,6 +96,18 @@ class RoleController extends Controller
         return view('role.show', [
             'role' => $role
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('role.show', $user->id, $user->idRole);
+        
+        if($check){
+            return view('role.show', [
+                'role' => $role
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Role Master');
+        }
     }
 
     /**
@@ -88,6 +122,18 @@ class RoleController extends Controller
         return view('role.edit',[
             'role' => $role,
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('role.edit', $user->id, $user->idRole);
+        
+        if($check){
+            return view('role.edit',[
+                'role' => $role,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Role Master');
+        }
     }
 
     /**

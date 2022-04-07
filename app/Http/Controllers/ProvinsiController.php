@@ -26,6 +26,18 @@ class ProvinsiController extends Controller
         return view('provinsi.index',[
             'data' => $data,
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('provinsi.index', $user->id, $user->idRole);
+        
+        if($check){
+            return view('provinsi.index',[
+                'data' => $data,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Provinsi Master');
+        }
     }
 
     /**
@@ -41,6 +53,18 @@ class ProvinsiController extends Controller
         return view('provinsi.tambah',[
             'dataPulau' => $dataPulau,
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('provinsi.create', $user->id, $user->idRole);
+        
+        if($check){
+            return view('provinsi.tambah',[
+                'dataPulau' => $dataPulau,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Provinsi Master');
+        }
 
     }
 
@@ -86,6 +110,19 @@ class ProvinsiController extends Controller
             'dataPulau' => $dataPulau,
             'provinsi' => $provinsi,
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('provinsi.show', $user->id, $user->idRole);
+        
+        if($check){
+            return view('provinsi.show',[
+                'dataPulau' => $dataPulau,
+                'provinsi' => $provinsi,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Provinsi Master');
+        }
     }
 
     /**
@@ -104,6 +141,19 @@ class ProvinsiController extends Controller
             'dataPulau' => $dataPulau,
             'provinsi' => $provinsi,
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('provinsi.edit', $user->id, $user->idRole);
+        
+        if($check){
+            return view('provinsi.edit',[
+                'dataPulau' => $dataPulau,
+                'provinsi' => $provinsi,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Provinsi Master');
+        }
 
     }
 

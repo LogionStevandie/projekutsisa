@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TrackingController extends Controller
 {
@@ -14,6 +15,8 @@ class TrackingController extends Controller
     public function index()
     {
         //
+          return view('tracking.index');
+
     }
 
     /**
@@ -35,6 +38,7 @@ class TrackingController extends Controller
     public function store(Request $request)
     {
         //
+
     }
 
     /**
@@ -43,9 +47,35 @@ class TrackingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
         //
+        $data = $request->collect();
+
+        $namaDekrip = $this->enkripData($data['namaEnkripsi'], false);
+
+        $data = DB::table('NotaPengiriman')
+            ->where('nama', $namaDekrip)
+            ->where('hapus',0)
+            ->get();
+        //dd($data);
+         $dataPengirimanJenis = DB::table('pengirimanJenis')
+            ->where('hapus', 0)
+            ->get();
+         $dataBarang = DB::table('barangJenis')
+            ->where('hapus',0)
+            ->get();
+
+         $dataUser = DB::table('users')
+            ->get();
+        
+        //dd($data);
+        return view('tracking.detail',[
+            'data' => $data,
+            'dataPengirimanJenis' => $dataPengirimanJenis,
+            'dataBarang' => $dataBarang,
+            'dataUser' => $dataUser,
+        ]);
     }
 
     /**

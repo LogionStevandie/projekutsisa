@@ -37,6 +37,20 @@ class HargaPengirimanController extends Controller
             'dataKota' => $dataKota,
             'dataPengirimanJenis'=>$dataPengirimanJenis
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('hargaPengiriman.index', $user->id, $user->idRole);
+        
+        if($check){
+            return view('hargaPengiriman.index',[
+                'data' => $data,
+                'dataKota' => $dataKota,
+                'dataPengirimanJenis'=>$dataPengirimanJenis
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Harga Pengiriman Master');
+        }
     }
 
     /**
@@ -62,6 +76,20 @@ class HargaPengirimanController extends Controller
             'dataPengirimanJenis'=>$dataPengirimanJenis,
             'dataPembayaran'=>$dataPembayaran,
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('hargaPengiriman.create', $user->id, $user->idRole);
+        
+        if($check){
+            return view('hargaPengiriman.tambah',[
+                'dataKota' => $dataKota,
+                'dataPengirimanJenis'=>$dataPengirimanJenis,
+                'dataPembayaran'=>$dataPembayaran,
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Harga Pengiriman Master');
+        }
     }
 
     /**
@@ -103,11 +131,26 @@ class HargaPengirimanController extends Controller
         ->where('hapus',0)
         ->get();
 
-        return view('hargaPengiriman.edit',[
+        return view('hargaPengiriman.show',[
             'dataKota' => $dataKota,
             'dataPengirimanJenis'=>$dataPengirimanJenis,
             'hargaPengiriman'=>$hargaPengiriman
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('hargaPengiriman.show', $user->id, $user->idRole);
+        
+        if($check){
+            return view('hargaPengiriman.show',[
+                'dataKota' => $dataKota,
+                'dataPengirimanJenis'=>$dataPengirimanJenis,
+                'hargaPengiriman'=>$hargaPengiriman
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Harga Pengiriman Master');
+        }
+        
     }
 
     /**
@@ -131,6 +174,20 @@ class HargaPengirimanController extends Controller
             'dataPengirimanJenis'=>$dataPengirimanJenis,
             'hargaPengiriman'=>$hargaPengiriman
         ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('hargaPengiriman.edit', $user->id, $user->idRole);
+        
+        if($check){
+            return view('hargaPengiriman.edit',[
+                'dataKota' => $dataKota,
+                'dataPengirimanJenis'=>$dataPengirimanJenis,
+                'hargaPengiriman'=>$hargaPengiriman
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Harga Pengiriman Master');
+        }
     }
 
     /**
@@ -166,10 +223,10 @@ class HargaPengirimanController extends Controller
     {
         //
         DB::table('HargaPengiriman')
-        ->where('idHargaPengiriman', $hargaPengiriman['idHargaPengiriman'])
-        ->update(array(
+            ->where('idHargaPengiriman', $hargaPengiriman['idHargaPengiriman'])
+            ->update(array(
             'hapus' => 1,
-        )
+            )
         );
         return redirect()->route('hargaPengiriman.index')->with('status','Success!!');
     }
