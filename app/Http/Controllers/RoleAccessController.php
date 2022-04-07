@@ -19,10 +19,13 @@ class RoleAccessController extends Controller
     {
         //
         $data = DB::table('Role')->where('hapus',0)->get();
-        
+        $dataAccess = DB::table('roleAccess')
+            ->leftjoin('menu', 'roleAccess.idMenu', '=', 'menu.idMenu')
+            ->get();
 
         return view('roleAccess.index',[
             'data' => $data,
+            'dataAccess' => $dataAccess,    
         ]);
 
         $user = Auth::user();
@@ -77,18 +80,18 @@ class RoleAccessController extends Controller
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function edit(Role $role)
+    public function edit(Role $rolesAkse)
     {
         //
         $dataMenu = DB::table('menu')
             ->get();
         
         $dataAccess = DB::table('roleaccess')
-            ->where('idRole', $role->idRole)
+            ->where('idRole', $rolesAkse->idRole)
             ->get();
 
         return view('roleAccess.edit',[
-            'role' => $role,
+            'role' => $rolesAkse,
             'dataMenu' => $dataMenu,
             'dataAccess' => $dataAccess,
         ]);
@@ -98,7 +101,7 @@ class RoleAccessController extends Controller
         
         if($check){
             return view('roleAccess.edit',[
-                'role' => $role,
+                'role' => $rolesAkse,
                 'dataMenu' => $dataMenu,
                 'dataAccess' => $dataAccess,
             ]);
@@ -115,24 +118,24 @@ class RoleAccessController extends Controller
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(Request $request, Role $rolesAkse)
     {
         //
         $data=$request->collect();
-        //dd($data);
+        dd($data);
         $dataRoleAccess = DB::table('roleaccess')
-            ->where('idRole', $role->idRole)
+            ->where('idRole', $rolesAkse->idRole)
             ->get();
 
         if(count($dataRoleAccess) > count($data['menu'])){
             DB::table('MGudangValues')
-                ->where('idRole','=',$role->idRole)
+                ->where('idRole','=',$rolesAkse->idRole)
                 ->delete();
 
             for($i = 0; $i < count($data['menu']); $i++){
             DB::table('MGudangValues')
                 ->insert(array(
-                    'idRole' => $role->idRole,
+                    'idRole' => $rolesAkse->idRole,
                     'idMenu' => $data['menu'][$i],
                     )
                 ); 
@@ -142,7 +145,7 @@ class RoleAccessController extends Controller
             for($i = 0; $i < count($data['menu']); $i++){
                 if($i < count($dataRoleAccess)){
                     DB::table('MGudangValues')
-                        ->where('MGudangID', $role->idRole)
+                        ->where('MGudangID', $rolesAkse->idRole)
                         ->update(array(
                             'idMenu' => $data['menu'][$i],
                         )
@@ -151,7 +154,7 @@ class RoleAccessController extends Controller
                 else{
                     DB::table('MGudangValues')
                         ->insert(array(
-                            'idRole' => $role->idRole,
+                            'idRole' => $rolesAkse->idRole,
                             'idMenu' => $data['gudangAreaSimpan'][$i],
                         )
                     ); 

@@ -90,7 +90,7 @@ class KurirController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(NotaPengiriman $notaPengiriman)
+    public function edit(NotaPengiriman $kurir)
     {
         //
         $dataPengirimanJenis = DB::table('pengirimanJenis')
@@ -118,14 +118,14 @@ class KurirController extends Controller
          $dataUser = DB::table('users')
             ->get();
         
-        if($notaPengiriman->prosesPengiriman == 2 && ($notaPengiriman->prosesKurir == 0 || $notaPengiriman->prosesKurir == 1)){
+        if($kurir->prosesPengiriman == 2 && ($kurir->prosesKurir == 0 || $kurir->prosesKurir == 1)){
             return view('kurir.edit',[
                 'dataPengirimanJenis' => $dataPengirimanJenis,
                 'dataPembayaranJenis' => $dataPembayaranJenis,
                 'dataHargaPengiriman' => $dataHargaPengiriman,
                 'dataKota' => $dataKota,
                 'dataBarang' => $dataBarang,
-                'notaPengiriman' => $notaPengiriman,
+                'notaPengiriman' => $kurir,
                 'dataDetail' => $dataDetail,
                 'dataUser' => $dataUser,
             ]);
@@ -137,14 +137,14 @@ class KurirController extends Controller
         $check = $this->checkAccess('kurir.edit', $user->id, $user->idRole);
         
         if($check){
-            if($notaPengiriman->prosesPengiriman == 2 && ($notaPengiriman->prosesKurir == 0 || $notaPengiriman->prosesKurir == 1)){
+            if($kurir->prosesPengiriman == 2 && ($kurir->prosesKurir == 0 || $kurir->prosesKurir == 1)){
                 return view('kurir.edit',[
                     'dataPengirimanJenis' => $dataPengirimanJenis,
                     'dataPembayaranJenis' => $dataPembayaranJenis,
                     'dataHargaPengiriman' => $dataHargaPengiriman,
                     'dataKota' => $dataKota,
                     'dataBarang' => $dataBarang,
-                    'notaPengiriman' => $notaPengiriman,
+                    'notaPengiriman' => $kurir,
                     'dataDetail' => $dataDetail,
                     'dataUser' => $dataUser,
                 ]);
@@ -164,24 +164,24 @@ class KurirController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, NotaPengiriman $notaPengiriman)
+    public function update(Request $request, NotaPengiriman $kurir)
     {
         //
         $user = Auth::user();
-        if($notaPengiriman->prosesPengiriman == "2" && $notaPengiriman->prosesKurir == "0"){
+        if($kurir->prosesPengiriman == "2" && $kurir->prosesKurir == "0"){
             //barang baru dikirim
             DB::table('notaPengiriman')
-                ->where('idNotaPengiriman', $notaPengiriman['idNotaPengiriman'])
+                ->where('idNotaPengiriman', $kurir['idNotaPengiriman'])
                 ->update(array(
                     'prosesKurir' => $user->id,
                     'prosesKurir' => 1,
                 )
             );
         }
-        elseif($notaPengiriman->prosesPengiriman == "2" && $notaPengiriman->prosesKurir == "1"){
+        elseif($kurir->prosesPengiriman == "2" && $kurir->prosesKurir == "1"){
             //barang sudah sampai gudang pengiriman
             DB::table('notaPengiriman')
-                ->where('idNotaPengiriman', $notaPengiriman['idNotaPengiriman'])
+                ->where('idNotaPengiriman', $kurir['idNotaPengiriman'])
                 ->update(array(
                     'prosesKurir' => 2,
                 )

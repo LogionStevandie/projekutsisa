@@ -80,18 +80,7 @@
         </ul>
       </li><!-- End Forms Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>Kurir</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-         <li>
-            <a href="{{route('notaPengiriman.index')}}">
-              <i class="bi bi-circle"></i><span>List Barang untuk di Proses</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Tables Nav -->
+    
       
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
@@ -124,6 +113,24 @@
           </li>
         </ul>
       </li><!-- End Icons Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#roles-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-credit-card-2-front-fill"></i><span>Roles</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="roles-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+           <li>
+            <a href="{{route('userRole.index')}}">
+              <i class="bi bi-circle"></i><span>Atur Role</span>
+            </a>
+          </li> 
+           <li>
+            <a href="{{route('rolesAkses.index')}}">
+              <i class="bi bi-circle"></i><span>Akses Role</span>
+            </a>
+          </li>
+        </ul>
+      </li>
 
     
 

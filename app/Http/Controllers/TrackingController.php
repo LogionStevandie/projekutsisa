@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class TrackingController extends Controller
 {
@@ -68,6 +69,9 @@ class TrackingController extends Controller
 
          $dataUser = DB::table('users')
             ->get();
+          $dataKota = DB::table('kota')
+            ->where('hapus', 0)
+            ->get();
         
         //dd($data);
         return view('tracking.detail',[
@@ -75,6 +79,7 @@ class TrackingController extends Controller
             'dataPengirimanJenis' => $dataPengirimanJenis,
             'dataBarang' => $dataBarang,
             'dataUser' => $dataUser,
+            'dataKota'=>$dataKota
         ]);
     }
 

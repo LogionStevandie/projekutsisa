@@ -30,7 +30,7 @@ class ApprovePengirimanController extends Controller
             ->where('hapus', 0)
             ->get();
 
-        return view('approvedPengiriman.index',[
+        return view('approvePengiriman.index',[
             'data' => $data,
             'dataHargaPengiriman' => $dataHargaPengiriman,
             'dataKota' => $dataKota,
@@ -91,7 +91,7 @@ class ApprovePengirimanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(NotaPengiriman $notaPengiriman)
+    public function edit(NotaPengiriman $approvePengiriman)
     {
         //
         $dataPengirimanJenis = DB::table('pengirimanJenis')
@@ -119,14 +119,14 @@ class ApprovePengirimanController extends Controller
          $dataUser = DB::table('users')
             ->get();
         
-        if($notaPengiriman->prosesPengiriman == 0 || $notaPengiriman->prosesPengiriman == 1){
+        if($approvePengiriman->prosesPengiriman == 0 || $approvePengiriman->prosesPengiriman == 1){
             return view('approvePengiriman.edit',[
                 'dataPengirimanJenis' => $dataPengirimanJenis,
                 'dataPembayaranJenis' => $dataPembayaranJenis,
                 'dataHargaPengiriman' => $dataHargaPengiriman,
                 'dataKota' => $dataKota,
                 'dataBarang' => $dataBarang,
-                'notaPengiriman' => $notaPengiriman,
+                'notaPengiriman' => $approvePengiriman,
                 'dataDetail' => $dataDetail,
                 'dataUser' => $dataUser,
             ]);
@@ -138,14 +138,14 @@ class ApprovePengirimanController extends Controller
         $check = $this->checkAccess('approvePengiriman.edit', $user->id, $user->idRole);
         
         if($check){
-            if($notaPengiriman->prosesPengiriman == 0 || $notaPengiriman->prosesPengiriman == 1){
+            if($approvePengiriman->prosesPengiriman == 0 || $approvePengiriman->prosesPengiriman == 1){
                 return view('approvePengiriman.edit',[
                     'dataPengirimanJenis' => $dataPengirimanJenis,
                     'dataPembayaranJenis' => $dataPembayaranJenis,
                     'dataHargaPengiriman' => $dataHargaPengiriman,
                     'dataKota' => $dataKota,
                     'dataBarang' => $dataBarang,
-                    'notaPengiriman' => $notaPengiriman,
+                    'notaPengiriman' => $approvePengiriman,
                     'dataDetail' => $dataDetail,
                     'dataUser' => $dataUser,
                 ]);
@@ -165,22 +165,22 @@ class ApprovePengirimanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, NotaPengiriman $notaPengiriman)
+    public function update(Request $request, NotaPengiriman $approvePengiriman)
     {
         //
-        if($notaPengiriman->prosesPengiriman == "0"){
+        if($approvePengiriman->prosesPengiriman == "0"){
             //barang baru dikirim
             DB::table('notaPengiriman')
-                ->where('idNotaPengiriman', $notaPengiriman['idNotaPengiriman'])
+                ->where('idNotaPengiriman', $approvePengiriman['idNotaPengiriman'])
                 ->update(array(
                     'prosesPengiriman' => 1,
                 )
             );
         }
-        elseif($notaPengiriman->prosesPengiriman == "1"){
+        elseif($approvePengiriman->prosesPengiriman == "1"){
             //barang sudah sampai gudang pengiriman
             DB::table('notaPengiriman')
-                ->where('idNotaPengiriman', $notaPengiriman['idNotaPengiriman'])
+                ->where('idNotaPengiriman', $approvePengiriman['idNotaPengiriman'])
                 ->update(array(
                     'prosesPengiriman' => 2,
                 )

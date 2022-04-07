@@ -30,13 +30,16 @@ Route::resource('barangJenis', 'App\Http\Controllers\BarangJenisController');//s
 Route::resource('role', 'App\Http\Controllers\RoleController');//selese
 
 
-Route::resource('menu', 'App\Http\Controllers\MenuController');//selese
-Route::resource('pengirimanJenis', 'App\Http\Controllers\PengirimanJenisController');
-Route::resource('hargaPengiriman', 'App\Http\Controllers\HargaPengirimanController');
-Route::resource('notaPengiriman', 'App\Http\Controllers\NotaPengirimanController');
+Route::resource('menu', 'App\Http\Controllers\MenuController');//selese menu input
+Route::resource('pengirimanJenis', 'App\Http\Controllers\PengirimanJenisController');//selese menu input
+Route::resource('hargaPengiriman', 'App\Http\Controllers\HargaPengirimanController');//selese menu input
+Route::resource('notaPengiriman', 'App\Http\Controllers\NotaPengirimanController');//selese menu input
 Route::get('/print/invoice/{notaPengiriman}',[App\Http\Controllers\NotaPengirimanController::class, 'print']); //cobak gini ta
 
-Route::resource('tracking', 'App\Http\Controllers\TrackingController');
+Route::resource('tracking', 'App\Http\Controllers\TrackingController');//selese menu input
 //Route::get('/tracking/{dataEnkrip}',[App\Http\Controllers\TrackingController::class, 'show']);
-Route::resource('approvePengiriman', 'App\Http\Controllers\ApprovePengirimanController');//belom
-Route::resource('kurir', 'App\Http\Controllers\KurirController');//belom 
+Route::resource('approvePengiriman', 'App\Http\Controllers\ApprovePengirimanController');//selese menu input
+Route::resource('kurir', 'App\Http\Controllers\KurirController');//selese menu input
+
+Route::resource('userRole', 'App\Http\Controllers\UserRoleController');//selese menu input
+Route::resource('rolesAkses', 'App\Http\Controllers\RoleAccessController');//selese menu input

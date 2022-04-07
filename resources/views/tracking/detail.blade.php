@@ -159,7 +159,7 @@ p {
 </style>
   <div class="container">
     <article class="card">
-        <header class="card-header"> My Orders / Tracking </header>
+        <header class="card-header">Tracking Barang</header>
         <div class="card-body">
             <br>
             @foreach ($data as $nota)
@@ -195,7 +195,6 @@ p {
                     <div class="col"> <strong>Keterangan:</strong> <br> {{$nota->keterangan}} </div>
                     <div class="col"> <strong>Berat #:</strong> <br> {{$nota->totalBerat}} </div>
                     <div class="col"> <strong>Harga #:</strong> <br> Rp.{{$nota->totalHarga}} </div>
-                    <div class="col"> <strong>Kurir #:</strong> <br> {{$nota->idKurir}} </div><!--nanti looping-->
                     <div class="col"> 
                         <strong>Barang Jenis #:</strong> <br> 
                          @foreach($dataBarang as $dataBarg)
@@ -205,28 +204,47 @@ p {
                          @endforeach
                     </div>
                 </div>
-            </article>
-               
+            </article>  
             <div class="track">
                 @if($nota->prosesPengiriman==0 && $nota->prosesKurir==0)  <!-- 0:belum, 1:proses, 2:selesai -->
-                <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Belum dikirim-></span> </div>
-                <div class="step "> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Sedang Diproses-></span> </div>
-                <div class="step "> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Proses pengiriman-></span> </div>
-                <div class="step "> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Sudah terkirim !</span> </div>
-                @elseif($nota->prosesPengiriman==1 && $nota->prosesKurir==1)
-                <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Belum dikirim-></span> </div>
-                <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Sedang Diproses-></span> </div>
-                <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Proses pengiriman-></span> </div>
-                <div class="step "> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Sudah terkirim !</span> </div>
-                @elseif($nota->prosesPengiriman==2 && $nota->prosesKurir==2)
-                <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Belum dikirim-></span> </div>
-                <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Sedang Diproses-></span> </div>
-                <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Proses pengiriman-></span> </div>
-                <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Sudah terkirim !</span> </div>
+                <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Belum dikirim</span> </div>
+                <div class="step "> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Sedang Diproses</span> </div>
+                <div class="step "> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Proses pengiriman</span> </div>
+                <div class="step "> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Terkirim Di gudang Pusat</span> </div>
+                 <div class="step "> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Proses pengiriman Oleh kurir</span> </div>
+                 <div class="step "> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Pesanan sampai ke Pelanggan</span> </div>
+                @elseif($nota->prosesPengiriman==1 && $nota->prosesKurir==0)
+                <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Belum dikirim</span> </div>
+                <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Sedang Diproses</span> </div>
+                <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Proses pengiriman</span> </div>
+                <div class="step "> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Terkirim Di gudang Pusat</span> </div>
+                 <div class="step "> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Proses pengiriman Oleh kurir</span> </div>
+                 <div class="step "> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Pesanan sampai ke Pelanggan</span> </div>
+                @elseif($nota->prosesPengiriman==2 && $nota->prosesKurir==0)
+                <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Belum dikirim</span> </div>
+                <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Sedang Diproses</span> </div>
+                <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Proses pengiriman</span> </div>
+                <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Terkirim Di gudang Pusat</span> </div>
+                 <div class="step "> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Proses pengiriman Oleh kurir</span> </div>
+                 <div class="step "> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Pesanan sampai ke Pelanggan</span> </div>
+                @elseif($nota->prosesPengiriman==2 && $nota->prosesKurir==1)
+                <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Belum dikirim</span> </div>
+                <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Sedang Diproses</span> </div>
+                <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Proses pengiriman</span> </div>
+                <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Terkirim Di gudang Pusat</span> </div>
+                <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Proses pengiriman Oleh kurir</span> </div>
+                <div class="step "> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Pesanan sampai ke Pelanggan</span> </div>
+                @elseif($nota->prosesKurir==2 && $nota->prosesKurir==1)
+                <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Belum dikirim</span> </div>
+                <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Sedang Diproses</span> </div>
+                <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Proses pengiriman</span> </div>
+                <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Terkirim Di gudang Pusat</span> </div>
+                <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Proses pengiriman Oleh kurir</span> </div>
+                <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Pesanan sampai ke Pelanggan</span> </div>
                 @endif
             </div>
-            <hr>
-            <hr> <a href="{{route('tracking.index')}}" class="btn btn-warning" data-abc="true"> <i class="fa fa-chevron-left"></i> Kembali</a>
+            <br>
+             <a href="{{route('tracking.index')}}" class="btn btn-warning" data-abc="true"> <i class="fa fa-chevron-left"></i> Kembali</a>
         </div>
         @endforeach
     </article>
