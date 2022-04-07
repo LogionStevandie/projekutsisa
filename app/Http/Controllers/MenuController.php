@@ -24,9 +24,6 @@ class MenuController extends Controller
         $data = DB::table('Menu')->where('hapus',0)->get();
         
 
-        return view('menu.index',[
-            'data' => $data,
-        ]);
 
         $user = Auth::user();
         $check = $this->checkAccess('menu.index', $user->id, $user->idRole);
@@ -48,7 +45,6 @@ class MenuController extends Controller
      */
     public function create()
     {
-        return view('menu.tambah');
 
         $user = Auth::user();
         $check = $this->checkAccess('menu.create', $user->id, $user->idRole);
@@ -90,9 +86,6 @@ class MenuController extends Controller
      */
     public function show(Menu $menu)
     {
-        return view('menu.show',[
-            'menu' => $menu,
-        ]);
 
         $user = Auth::user();
         $check = $this->checkAccess('menu.show', $user->id, $user->idRole);
@@ -115,9 +108,6 @@ class MenuController extends Controller
      */
     public function edit(Menu $menu)
     {
-        return view('menu.edit',[
-            'menu' => $menu,
-        ]);
 
         $user = Auth::user();
         $check = $this->checkAccess('menu.edit', $user->id, $user->idRole);

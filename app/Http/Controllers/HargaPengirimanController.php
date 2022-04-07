@@ -31,12 +31,7 @@ class HargaPengirimanController extends Controller
         $dataPengirimanJenis = DB::table('PengirimanJenis')
             ->where('hapus',0)
             ->get();
-    
-        return view('hargaPengiriman.index',[
-            'data' => $data,
-            'dataKota' => $dataKota,
-            'dataPengirimanJenis'=>$dataPengirimanJenis
-        ]);
+
 
         $user = Auth::user();
         $check = $this->checkAccess('hargaPengiriman.index', $user->id, $user->idRole);
@@ -71,11 +66,6 @@ class HargaPengirimanController extends Controller
             ->where('hargaPengiriman.hapus',0)
             ->get();
 
-        return view('hargaPengiriman.tambah',[
-            'dataKota' => $dataKota,
-            'dataPengirimanJenis'=>$dataPengirimanJenis,
-            'dataPembayaran'=>$dataPembayaran,
-        ]);
 
         $user = Auth::user();
         $check = $this->checkAccess('hargaPengiriman.create', $user->id, $user->idRole);
@@ -131,11 +121,6 @@ class HargaPengirimanController extends Controller
         ->where('hapus',0)
         ->get();
 
-        return view('hargaPengiriman.show',[
-            'dataKota' => $dataKota,
-            'dataPengirimanJenis'=>$dataPengirimanJenis,
-            'hargaPengiriman'=>$hargaPengiriman
-        ]);
 
         $user = Auth::user();
         $check = $this->checkAccess('hargaPengiriman.show', $user->id, $user->idRole);
@@ -169,11 +154,6 @@ class HargaPengirimanController extends Controller
         ->where('hapus',0)
         ->get();
 
-        return view('hargaPengiriman.edit',[
-            'dataKota' => $dataKota,
-            'dataPengirimanJenis'=>$dataPengirimanJenis,
-            'hargaPengiriman'=>$hargaPengiriman
-        ]);
 
         $user = Auth::user();
         $check = $this->checkAccess('hargaPengiriman.edit', $user->id, $user->idRole);

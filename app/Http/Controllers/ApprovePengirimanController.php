@@ -30,11 +30,6 @@ class ApprovePengirimanController extends Controller
             ->where('hapus', 0)
             ->get();
 
-        return view('approvePengiriman.index',[
-            'data' => $data,
-            'dataHargaPengiriman' => $dataHargaPengiriman,
-            'dataKota' => $dataKota,
-        ]);
 
         $user = Auth::user();
         $check = $this->checkAccess('approvePengiriman.index', $user->id, $user->idRole);
@@ -119,20 +114,6 @@ class ApprovePengirimanController extends Controller
          $dataUser = DB::table('users')
             ->get();
         
-        if($approvePengiriman->prosesPengiriman == 0 || $approvePengiriman->prosesPengiriman == 1){
-            return view('approvePengiriman.edit',[
-                'dataPengirimanJenis' => $dataPengirimanJenis,
-                'dataPembayaranJenis' => $dataPembayaranJenis,
-                'dataHargaPengiriman' => $dataHargaPengiriman,
-                'dataKota' => $dataKota,
-                'dataBarang' => $dataBarang,
-                'notaPengiriman' => $approvePengiriman,
-                'dataDetail' => $dataDetail,
-                'dataUser' => $dataUser,
-            ]);
-        }else{
-            return redirect()->route('approvePengiriman.index')->with('status','File tidak dapat diedit');         
-        }
 
         $user = Auth::user();
         $check = $this->checkAccess('approvePengiriman.edit', $user->id, $user->idRole);

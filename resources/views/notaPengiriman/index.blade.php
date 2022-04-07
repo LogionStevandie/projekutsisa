@@ -76,7 +76,7 @@
                 @elseif($data->prosesKurir==1)
                 <td>Sedang Diproses</td>
                 @elseif($data->prosesKurir==2)
-                <td>Sudah dikirim</td>
+                <td>Sudah sampai ditujuan</td>
                 @endif
                 
                 <td>

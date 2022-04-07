@@ -18,15 +18,12 @@ class PengirimanJenisController extends Controller
     {
         //
         $data = DB::table('PengirimanJenis')->where('hapus',0)->get();
-        return view('PengirimanJenis.index',[
-            'data' => $data,
-        ]);
 
         $user = Auth::user();
-        $check = $this->checkAccess('PengirimanJenis.index', $user->id, $user->idRole);
+        $check = $this->checkAccess('pengirimanJenis.index', $user->id, $user->idRole);
         
         if($check){
-            return view('PengirimanJenis.index',[
+            return view('pengirimanJenis.index',[
                 'data' => $data,
             ]);
         }
@@ -43,10 +40,9 @@ class PengirimanJenisController extends Controller
     public function create()
     {
         //
-        return view('pengirimanJenis.tambah');
 
         $user = Auth::user();
-        $check = $this->checkAccess('PengirimanJenis.create', $user->id, $user->idRole);
+        $check = $this->checkAccess('pengirimanJenis.create', $user->id, $user->idRole);
         
         if($check){
             return view('pengirimanJenis.tambah');
@@ -86,12 +82,9 @@ class PengirimanJenisController extends Controller
     public function show(PengirimanJenis $pengirimanJeni)
     {
         //
-        return view('pengirimanJenis.show',[
-            'pengirimanJenis' => $pengirimanJeni,
-        ]);
 
         $user = Auth::user();
-        $check = $this->checkAccess('PengirimanJenis.show', $user->id, $user->idRole);
+        $check = $this->checkAccess('pengirimanJenis.show', $user->id, $user->idRole);
         
         if($check){
             return view('pengirimanJenis.show',[
@@ -112,12 +105,9 @@ class PengirimanJenisController extends Controller
     public function edit(PengirimanJenis $pengirimanJeni)
     {
         //
-        return view('pengirimanJenis.edit',[
-            'pengirimanJenis' => $pengirimanJeni,
-        ]);
 
         $user = Auth::user();
-        $check = $this->checkAccess('PengirimanJenis.edit', $user->id, $user->idRole);
+        $check = $this->checkAccess('pengirimanJenis.edit', $user->id, $user->idRole);
         
         if($check){
             return view('pengirimanJenis.edit',[

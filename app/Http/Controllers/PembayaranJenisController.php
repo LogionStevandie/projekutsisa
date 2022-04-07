@@ -18,11 +18,6 @@ class PembayaranJenisController extends Controller
     {
         //
         $data = DB::table('PembayaranJenis')->where('hapus',0)->get();
-        
-
-        return view('pembayaranJenis.index',[
-            'data' => $data,
-        ]);
 
         $user = Auth::user();
         $check = $this->checkAccess('pembayaranJenis.index', $user->id, $user->idRole);
@@ -45,7 +40,6 @@ class PembayaranJenisController extends Controller
     public function create()
     {
         //
-        return view('pembayaranJenis.tambah');
 
         $user = Auth::user();
         $check = $this->checkAccess('pembayaranJenis.create', $user->id, $user->idRole);
@@ -88,9 +82,7 @@ class PembayaranJenisController extends Controller
     public function show(PembayaranJenis $pembayaranJeni)
     {
         //
-        return view('pembayaranJenis.show',[
-            'pembayaranJenis' => $pembayaranJeni,
-        ]);
+
 
         $user = Auth::user();
         $check = $this->checkAccess('pembayaranJenis.show', $user->id, $user->idRole);
@@ -114,9 +106,6 @@ class PembayaranJenisController extends Controller
     public function edit(PembayaranJenis $pembayaranJeni)
     {
         //
-        return view('pembayaranJenis.edit',[
-            'pembayaranJenis' => $pembayaranJeni,
-        ]);
 
         $user = Auth::user();
         $check = $this->checkAccess('pembayaranJenis.edit', $user->id, $user->idRole);

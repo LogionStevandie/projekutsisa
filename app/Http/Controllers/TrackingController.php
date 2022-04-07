@@ -16,7 +16,15 @@ class TrackingController extends Controller
     public function index()
     {
         //
-          return view('tracking.index');
+        $user = Auth::user();
+        $check = $this->checkAccess('tracking.index', $user->id, $user->idRole);
+        
+        if($check){
+            return view('tracking.index');
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Tracking');
+        }
 
     }
 
@@ -69,18 +77,27 @@ class TrackingController extends Controller
 
          $dataUser = DB::table('users')
             ->get();
-          $dataKota = DB::table('kota')
+         $dataKota = DB::table('kota')
             ->where('hapus', 0)
             ->get();
         
         //dd($data);
-        return view('tracking.detail',[
-            'data' => $data,
-            'dataPengirimanJenis' => $dataPengirimanJenis,
-            'dataBarang' => $dataBarang,
-            'dataUser' => $dataUser,
-            'dataKota'=>$dataKota
-        ]);
+
+        $user = Auth::user();
+        $check = $this->checkAccess('tracking.detail', $user->id, $user->idRole);
+        
+        if($check){
+            return view('tracking.detail',[
+                'data' => $data,
+                'dataPengirimanJenis' => $dataPengirimanJenis,
+                'dataBarang' => $dataBarang,
+                'dataUser' => $dataUser,
+                'dataKota'=>$dataKota
+            ]);
+        }
+        else{
+            return redirect()->route('home')->with('message','Anda tidak memiliki akses kedalam Tracking');
+        }
     }
 
     /**

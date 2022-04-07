@@ -18,8 +18,8 @@ class Controller extends BaseController
     {
         $access = DB::table('menu')
             ->select('menu.url')
-            ->leftjoin('role_access', 'menu.MenuID', '=', 'role_access.idMenu')
-            ->where('role_access.idRole',$roleId)
+            ->leftjoin('roleaccess', 'menu.idMenu', '=', 'roleaccess.idMenu')
+            ->where('roleaccess.idRole',$roleId)
             ->get();
         $check = false;
         for($i = 0; $i < count($access); $i++ ){

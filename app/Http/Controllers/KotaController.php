@@ -27,9 +27,6 @@ class KotaController extends Controller
         ->where('kota.hapus',"=",0)
         ->get();
         
-        return view('kota.index',[
-            'data' => $data,
-        ]);
 
         $user = Auth::user();
         $check = $this->checkAccess('kota.index', $user->id, $user->idRole);
@@ -54,9 +51,6 @@ class KotaController extends Controller
         $dataProvinsi = DB::table('Provinsi')
             ->where('hapus',0)
             ->get();
-        return view('kota.tambah',[
-            'dataProvinsi' => $dataProvinsi,
-        ]);
 
         $user = Auth::user();
         $check = $this->checkAccess('kota.create', $user->id, $user->idRole);
@@ -103,10 +97,6 @@ class KotaController extends Controller
          $dataProvinsi = DB::table('Provinsi')
             ->where('hapus',0)
             ->get();
-        return view('kota.show',[
-            'dataProvinsi' => $dataProvinsi,
-            'kota' => $kotum,
-        ]);
 
         $user = Auth::user();
         $check = $this->checkAccess('kota.show', $user->id, $user->idRole);
@@ -133,10 +123,6 @@ class KotaController extends Controller
         $dataProvinsi = DB::table('Provinsi')
             ->where('hapus',0)
             ->get();
-        return view('kota.edit',[
-            'dataProvinsi' => $dataProvinsi,
-            'kota' => $kotum,
-        ]);
 
         $user = Auth::user();
         $check = $this->checkAccess('kota.edit', $user->id, $user->idRole);

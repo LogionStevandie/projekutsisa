@@ -57,7 +57,7 @@
                 @elseif($data->prosesKurir==1)
                 <th>Sedang Diproses</th>
                 @elseif($data->prosesKurir==2)
-                <th>Sudah dikirim</th>
+                <th>Sudah sampai ditujuan</th>
                 @endif
         
                 

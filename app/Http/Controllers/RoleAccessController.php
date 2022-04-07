@@ -23,17 +23,14 @@ class RoleAccessController extends Controller
             ->leftjoin('menu', 'roleAccess.idMenu', '=', 'menu.idMenu')
             ->get();
 
-        return view('roleAccess.index',[
-            'data' => $data,
-            'dataAccess' => $dataAccess,    
-        ]);
-
         $user = Auth::user();
         $check = $this->checkAccess('roleAccess.index', $user->id, $user->idRole);
         
         if($check){
             return view('roleAccess.index',[
                 'data' => $data,
+                'dataAccess'=>$dataAccess
+                 
             ]);
         }
         else{
@@ -80,28 +77,24 @@ class RoleAccessController extends Controller
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function edit(Role $rolesAkse)
+    public function edit(Role $roleAccess)
     {
         //
         $dataMenu = DB::table('menu')
+            ->where('hapus',0)
             ->get();
         
         $dataAccess = DB::table('roleaccess')
-            ->where('idRole', $rolesAkse->idRole)
+            ->rightjoin('menu', 'roleaccess.idMenu', '=', 'menu.idMenu')
+            ->where('roleaccess.idRole',$roleAccess->idRole)
             ->get();
-
-        return view('roleAccess.edit',[
-            'role' => $rolesAkse,
-            'dataMenu' => $dataMenu,
-            'dataAccess' => $dataAccess,
-        ]);
 
         $user = Auth::user();
         $check = $this->checkAccess('roleAccess.edit', $user->id, $user->idRole);
         
         if($check){
             return view('roleAccess.edit',[
-                'role' => $rolesAkse,
+                'role' => $roleAccess,
                 'dataMenu' => $dataMenu,
                 'dataAccess' => $dataAccess,
             ]);
@@ -118,49 +111,49 @@ class RoleAccessController extends Controller
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $rolesAkse)
+    public function update(Request $request, Role $roleAccess)
     {
         //
         $data=$request->collect();
-        dd($data);
+        //dd($data);
         $dataRoleAccess = DB::table('roleaccess')
-            ->where('idRole', $rolesAkse->idRole)
+            ->where('idRole', $roleAccess->idRole)
             ->get();
 
-        if(count($dataRoleAccess) > count($data['menu'])){
-            DB::table('MGudangValues')
-                ->where('idRole','=',$rolesAkse->idRole)
+        //if(count($dataRoleAccess) > count($data['menu'])){
+            DB::table('roleaccess')
+                ->where('idRole','=',$roleAccess->idRole)
                 ->delete();
 
             for($i = 0; $i < count($data['menu']); $i++){
-            DB::table('MGudangValues')
+            DB::table('roleaccess')
                 ->insert(array(
-                    'idRole' => $rolesAkse->idRole,
+                    'idRole' => $roleAccess->idRole,
                     'idMenu' => $data['menu'][$i],
                     )
                 ); 
             }
-        }
-        else{
+        //}
+        /*else{
             for($i = 0; $i < count($data['menu']); $i++){
                 if($i < count($dataRoleAccess)){
-                    DB::table('MGudangValues')
-                        ->where('MGudangID', $rolesAkse->idRole)
+                    DB::table('roleaccess')
+                        ->where('idRole', $roleAccess->idRole)
                         ->update(array(
                             'idMenu' => $data['menu'][$i],
                         )
                     );
                 }
                 else{
-                    DB::table('MGudangValues')
+                    DB::table('roleaccess')
                         ->insert(array(
-                            'idRole' => $rolesAkse->idRole,
-                            'idMenu' => $data['gudangAreaSimpan'][$i],
+                            'idRole' => $roleAccess->idRole,
+                            'idMenu' => $data['menu'][$i],
                         )
                     ); 
                 }
             }
-        }
+        }*/
         return redirect()->route('roleAccess.index')->with('status','Success!!');
     }
 

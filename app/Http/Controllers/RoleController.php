@@ -25,9 +25,6 @@ class RoleController extends Controller
         $data = DB::table('Role')->where('hapus',0)->get();
         
 
-        return view('role.index',[
-            'data' => $data,
-        ]);
 
         $user = Auth::user();
         $check = $this->checkAccess('role.index', $user->id, $user->idRole);
@@ -50,7 +47,6 @@ class RoleController extends Controller
     public function create()
     {
         //
-        return view('role.tambah');
 
         $user = Auth::user();
         $check = $this->checkAccess('role.create', $user->id, $user->idRole);
@@ -93,9 +89,6 @@ class RoleController extends Controller
     public function show(Role $role)
     {
         //
-        return view('role.show', [
-            'role' => $role
-        ]);
 
         $user = Auth::user();
         $check = $this->checkAccess('role.show', $user->id, $user->idRole);
@@ -119,9 +112,6 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         //
-        return view('role.edit',[
-            'role' => $role,
-        ]);
 
         $user = Auth::user();
         $check = $this->checkAccess('role.edit', $user->id, $user->idRole);

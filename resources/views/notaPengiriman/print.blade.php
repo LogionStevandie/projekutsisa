@@ -213,7 +213,7 @@
   <script>
   window.addEventListener("load", window.print());
 </script>
-<  <!-- Vendor JS Files -->
+  <!-- Vendor JS Files -->
   <script src="{{asset('NiceAdmin/assets/vendor/apexcharts/apexcharts.min.js')}}"></script>
   <script src="{{asset('NiceAdmin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
   <script src="{{asset('NiceAdmin/assets/vendor/chart.js/chart.min.js')}}"></script>

@@ -21,9 +21,6 @@ class UserRoleController extends Controller
             ->select('users.*','role.nama as namaRole')
             ->leftjoin('role', 'users.idRole', '=','role.idRole')
             ->get();
-        return view('userRole.index',[
-            'users' => $users,
-        ]);
 
         $user = Auth::user();
         $check = $this->checkAccess('userRole.index', $user->id, $user->idRole);
@@ -83,11 +80,6 @@ class UserRoleController extends Controller
         $role = DB::table('role')
             ->where('hapus',0)
             ->get();
-
-        return view('userRole.edit',[
-            'user' => $userRole,
-            'role' => $role,
-        ]);
 
         $user = Auth::user();
         $check = $this->checkAccess('userRole.edit', $user->id, $user->idRole);

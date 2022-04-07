@@ -30,11 +30,6 @@ class NotaPengirimanController extends Controller
             ->where('hapus', 0)
             ->get();
 
-        return view('notaPengiriman.index',[
-            'data' => $data,
-            'dataHargaPengiriman' => $dataHargaPengiriman,
-            'dataKota' => $dataKota,
-        ]);
 
         $user = Auth::user();
         $check = $this->checkAccess('notaPengiriman.index', $user->id, $user->idRole);
@@ -83,14 +78,6 @@ class NotaPengirimanController extends Controller
         $dataUser = DB::table('users')
             ->get();
         
-        return view('notaPengiriman.tambah',[
-            'dataPengirimanJenis' => $dataPengirimanJenis,
-            'dataPembayaranJenis' => $dataPembayaranJenis,
-            'dataHargaPengiriman' => $dataHargaPengiriman,
-            'dataKota' => $dataKota,
-            'dataBarang' => $dataBarang,
-            'dataUser' => $dataUser,
-        ]);
 
         $user = Auth::user();
         $check = $this->checkAccess('notaPengiriman.create', $user->id, $user->idRole);
@@ -215,16 +202,6 @@ class NotaPengirimanController extends Controller
 
         $dataUser = DB::table('users')
             ->get();
-        //dd($notaPengiriman);
-        return view('notaPengiriman.show',[
-            'notaPengiriman' => $notaPengiriman,
-            'dataPengirimanJenis' => $dataPengirimanJenis,
-            'dataPembayaranJenis' => $dataPembayaranJenis,
-            'dataKota' => $dataKota,
-            'dataBarang' => $dataBarang,
-            'dataHargaPengiriman' => $dataHargaPengiriman,
-            'dataUser' => $dataUser,
-        ]);
 
         $user = Auth::user();
         $check = $this->checkAccess('notaPengiriman.show', $user->id, $user->idRole);
@@ -280,20 +257,6 @@ class NotaPengirimanController extends Controller
          $dataUser = DB::table('users')
             ->get();
         
-        if($notaPengiriman->proses == 0){
-            return view('notaPengiriman.edit',[
-                'dataPengirimanJenis' => $dataPengirimanJenis,
-                'dataPembayaranJenis' => $dataPembayaranJenis,
-                'dataHargaPengiriman' => $dataHargaPengiriman,
-                'dataKota' => $dataKota,
-                'dataBarang' => $dataBarang,
-                'notaPengiriman' => $notaPengiriman,
-                'dataDetail' => $dataDetail,
-                'dataUser' => $dataUser,
-            ]);
-        }else{
-            return redirect()->route('notaPengiriman.index')->with('status','File tidak dapat diedit');         
-        }
 
         $user = Auth::user();
         $check = $this->checkAccess('notaPengiriman.edit', $user->id, $user->idRole);

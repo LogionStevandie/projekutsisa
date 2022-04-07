@@ -34,7 +34,9 @@
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Nama</th>
+                <th scope="col">Kode</th>
                 <th scope="col">Keterangan</th>
+                <th>Handle</th>
               </tr>
             </thead>
             <tbody>

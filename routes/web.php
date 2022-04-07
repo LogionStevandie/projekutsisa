@@ -42,4 +42,4 @@ Route::resource('approvePengiriman', 'App\Http\Controllers\ApprovePengirimanCont
 Route::resource('kurir', 'App\Http\Controllers\KurirController');//selese menu input
 
 Route::resource('userRole', 'App\Http\Controllers\UserRoleController');//selese menu input
-Route::resource('rolesAkses', 'App\Http\Controllers\RoleAccessController');//selese menu input
+Route::resource('roleAccess', 'App\Http\Controllers\RoleAccessController');//selese menu input

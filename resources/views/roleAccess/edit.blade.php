@@ -22,7 +22,7 @@
               <h5 class="card-title">Role Access</h5>
               <!--<p>Add lightweight datatables to your project with using the <a href="https://github.com/fiduswriter/Simple-DataTables" target="_blank">Simple DataTables</a> library. Just add <code>.datatable</code> class name to any table you wish to conver to a datatable</p>-->
                
-                    <form action="{{route('rolesAkses.update',[$role->idRole])}}" method="POST" >
+                    <form action="{{route('roleAccess.update',[$role->idRole])}}" method="POST" >
                        @csrf
                        @method('PUT')
 
@@ -35,8 +35,8 @@
                         <div class="form-group">
                             
                             @foreach($dataMenu as $data)      
-                              <input type="checkbox" class="form-check-input" name= "menu[]" value="1"{{'1' == old('idMenu',$data->idMenu)? 'checked' :'' }}> <br>
-                              <label for="title">{{$data->nama}}</label>
+                              <input type="checkbox" id="menuIni{{$data->idMenu}}" class="form-check-input" name= "menu[]" value="{{$data->idMenu}}"{{'$data->idMenu' == old('idMenu',$data->idMenu)? 'checked' :'' }}> 
+                              <label for="title">{{$data->nama}}</label><br>
                             @endforeach
                         </div>
                         <br>
@@ -52,4 +52,12 @@
       </div>
     </section>
 
+<script type="text/javascript">
+$(document).ready(function() {
+    var dataAccess = <?php echo json_encode($dataAccess); ?>;
+    $.each(dataAccess, function( key, value ){
+        $("#menuIni"+value.idMenu).prop('checked',true)
+    });
+});
+</script>
 @endsection

@@ -24,9 +24,6 @@ class PulauController extends Controller
         //
         $data = DB::table('Pulau')->where('hapus',0)->get();
 
-        return view('pulau.index',[
-            'data' => $data,
-        ]);
 
         $user = Auth::user();
         $check = $this->checkAccess('pulau.index', $user->id, $user->idRole);
@@ -50,7 +47,6 @@ class PulauController extends Controller
     public function create()
     {
         //
-        return view('pulau.tambah');
 
         $user = Auth::user();
         $check = $this->checkAccess('pulau.create', $user->id, $user->idRole);
@@ -93,9 +89,6 @@ class PulauController extends Controller
     public function show(Pulau $pulau)
     {
         //
-        return view('pulau.show',[
-            'pulau' => $pulau,
-        ]);
 
         $user = Auth::user();
         $check = $this->checkAccess('pulau.show', $user->id, $user->idRole);
@@ -119,9 +112,6 @@ class PulauController extends Controller
     public function edit(Pulau $pulau)
     {
         //
-        return view('pulau.edit',[
-            'pulau' => $pulau,
-        ]);
 
         $user = Auth::user();
         $check = $this->checkAccess('pulau.edit', $user->id, $user->idRole);

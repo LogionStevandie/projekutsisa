@@ -31,11 +31,6 @@ class KurirController extends Controller
             ->where('hapus', 0)
             ->get();
 
-        return view('kurir.index',[
-            'data' => $data,
-            'dataHargaPengiriman' => $dataHargaPengiriman,
-            'dataKota' => $dataKota,
-        ]);
 
         $user = Auth::user();
         $check = $this->checkAccess('kurir.index', $user->id, $user->idRole);
@@ -118,20 +113,6 @@ class KurirController extends Controller
          $dataUser = DB::table('users')
             ->get();
         
-        if($kurir->prosesPengiriman == 2 && ($kurir->prosesKurir == 0 || $kurir->prosesKurir == 1)){
-            return view('kurir.edit',[
-                'dataPengirimanJenis' => $dataPengirimanJenis,
-                'dataPembayaranJenis' => $dataPembayaranJenis,
-                'dataHargaPengiriman' => $dataHargaPengiriman,
-                'dataKota' => $dataKota,
-                'dataBarang' => $dataBarang,
-                'notaPengiriman' => $kurir,
-                'dataDetail' => $dataDetail,
-                'dataUser' => $dataUser,
-            ]);
-        }else{
-            return redirect()->route('kurir.index')->with('status','File tidak dapat diedit');         
-        }
 
         $user = Auth::user();
         $check = $this->checkAccess('kurir.edit', $user->id, $user->idRole);
@@ -170,10 +151,11 @@ class KurirController extends Controller
         $user = Auth::user();
         if($kurir->prosesPengiriman == "2" && $kurir->prosesKurir == "0"){
             //barang baru dikirim
+            //dd($user->id);
             DB::table('notaPengiriman')
                 ->where('idNotaPengiriman', $kurir['idNotaPengiriman'])
                 ->update(array(
-                    'prosesKurir' => $user->id,
+                    'idKurir' => $user->id,
                     'prosesKurir' => 1,
                 )
             );

@@ -9,18 +9,7 @@
         </a>
       </li><!-- End Dashboard Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>Nota</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-           <li>
-            <a href="{{route('notaPengiriman.index')}}">
-              <i class="bi bi-circle"></i><span>Tambah Nota</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Components Nav -->
+ 
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
@@ -79,22 +68,38 @@
     
         </ul>
       </li><!-- End Forms Nav -->
-
-    
-      
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-gem"></i><span>Tracking</span><i class="bi bi-chevron-down ms-auto"></i>
+    <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#roles-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-credit-card-2-front-fill"></i><span>Roles</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="roles-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
            <li>
-            <a href="{{route('tracking.index')}}">
-              <i class="bi bi-circle"></i><span>Tracking barang</span>
+            <a href="{{route('userRole.index')}}">
+              <i class="bi bi-circle"></i><span>Atur Role</span>
+            </a>
+          </li> 
+           <li>
+            <a href="{{route('roleAccess.index')}}">
+              <i class="bi bi-circle"></i><span>Akses Role</span>
             </a>
           </li>
-      
         </ul>
       </li>
+
+         <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i><span>Nota</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+           <li>
+            <a href="{{route('notaPengiriman.index')}}">
+              <i class="bi bi-circle"></i><span>Tambah Nota</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Components Nav -->
+      
+   
       
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#proses-nav" data-bs-toggle="collapse" href="#">
@@ -114,24 +119,21 @@
         </ul>
       </li><!-- End Icons Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#roles-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-credit-card-2-front-fill"></i><span>Roles</span><i class="bi bi-chevron-down ms-auto"></i>
+         <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-gem"></i><span>Tracking</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="roles-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
            <li>
-            <a href="{{route('userRole.index')}}">
-              <i class="bi bi-circle"></i><span>Atur Role</span>
-            </a>
-          </li> 
-           <li>
-            <a href="{{route('rolesAkses.index')}}">
-              <i class="bi bi-circle"></i><span>Akses Role</span>
+            <a href="{{route('tracking.index')}}">
+              <i class="bi bi-circle"></i><span>Tracking barang</span>
             </a>
           </li>
+      
         </ul>
       </li>
 
+  
     
 
 

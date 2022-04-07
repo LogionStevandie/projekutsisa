@@ -170,6 +170,11 @@ p {
                        <h6>Nama Pelanggan:{{$dataU->name}} </h6><!--nanti looping-->
                     @endif
               @endforeach
+                @foreach($dataUser as $dataU)
+                        @if($dataU->id==$nota->idKurir)
+                        <h6>Nama Kurir:{{$dataU->name}} </h6>
+                        @endif
+                @endforeach
          
             <br>
             
@@ -180,6 +185,8 @@ p {
                         <div class="col"> <strong>Nama Pelanggan #:</strong> <br> {{$dataU->name}} </div>
                         @endif
                     @endforeach
+
+                  
                    
                 
 
@@ -234,7 +241,7 @@ p {
                 <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Terkirim Di gudang Pusat</span> </div>
                 <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Proses pengiriman Oleh kurir</span> </div>
                 <div class="step "> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Pesanan sampai ke Pelanggan</span> </div>
-                @elseif($nota->prosesKurir==2 && $nota->prosesKurir==1)
+                @elseif($nota->prosesKurir==2 && $nota->prosesKurir==2)
                 <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Belum dikirim</span> </div>
                 <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Sedang Diproses</span> </div>
                 <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Proses pengiriman</span> </div>

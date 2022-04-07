@@ -28,10 +28,6 @@ class BarangJenisController extends Controller
             ->get();
         
 
-        return view('barangJenis.index',[
-            'data' => $data,
-        ]);
-
         $user = Auth::user();
         $check = $this->checkAccess('barangJenis.index', $user->id, $user->idRole);
         
@@ -52,8 +48,6 @@ class BarangJenisController extends Controller
      */
     public function create()
     {
-        //
-        return view('barangJenis.tambah');
 
         $user = Auth::user();
         $check = $this->checkAccess('barangJenis.create', $user->id, $user->idRole);
@@ -97,9 +91,6 @@ class BarangJenisController extends Controller
     public function show(BarangJenis $barangJeni)
     {
         //
-        return view('barangJenis.show',[
-            'barangJenis' => $barangJeni,
-        ]);
 
         $user = Auth::user();
         $check = $this->checkAccess('barangJenis.show', $user->id, $user->idRole);
@@ -123,9 +114,6 @@ class BarangJenisController extends Controller
     public function edit(BarangJenis $barangJeni)
     {
         //
-        return view('barangJenis.edit',[
-            'barangJenis' => $barangJeni,
-        ]);
 
         $user = Auth::user();
         $check = $this->checkAccess('barangJenis.edit', $user->id, $user->idRole);
